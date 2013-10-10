@@ -57,16 +57,26 @@ function authenticate_username_password(){
 		{
 			$gegevens = $openid->getAttributes();
 			$username = $gegevens['namePerson/friendly'];
-			$email = $gegevens['contact/email'];
+			//die(print_r($gegevens));
 			
 			$user_id = username_exists( $username );
-			if( !$user_id ) {
+
+			if( !$user_id and email_exists($email) == false ) {
 				$random_password = wp_generate_password( 18, false );
-				$user_id = wp_create_user( $username, $random_password,$email );
+				$user_id = wp_create_user( $username, $random_password,$gegevens['contact/email'] );
+				
+				// Return valid user object
+				$user = get_user_by( 'id', $user_id );
+
+				return $user;
 			}
-			// Return valid user object
-			$user = get_user_by( 'id', $user_id );
-			return $user;
+			else {
+				// Return valid user object
+				$user = get_user_by( 'id', $user_id );
+							
+				return $user;
+			}
+
 		}
 		
 	}
