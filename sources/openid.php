@@ -742,8 +742,7 @@ class LightOpenID
 
 		// Scouting NL reageert met 1 of 0. De waardes matchen dus niet als dit getest wordt. Fix: response direct terug sturen.
         //return preg_match('/is_valid\s*:\s*true/i', $response);
-		return print_r($response);
-		
+		return print_r($response, true);
     }
 
     protected function getAxAttributes()
