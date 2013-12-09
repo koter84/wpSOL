@@ -50,28 +50,30 @@ function wpsol_wp_login_form($args = array()) // login_form action
 // Sidebar Login
 function wpsol_sidebar_login()
 {
-	// haal het "normale" login formulier op
-	// ToDo - misschien beter een nieuw formulier opbouwen?
-	$result = wp_login_form(array('echo'=>false, 'remember'=>false));
-
-	// verwijder username-input
-	$begin = strpos($result, '<p class="login-username">');
-	$einde = strpos($result, '</p>', $begin)+4;
-	$result = substr($result, 0, $begin).substr($result, $einde);
-
-	// verwijder password-input
-	$begin = strpos($result, '<p class="login-password">');
-	$einde = strpos($result, '</p>', $begin)+4;
-	$result = substr($result, 0, $begin).substr($result, $einde);
-
 	if( is_user_logged_in() )
 	{ // ingelogd
 		// ToDo - display ingelogde gebruikersnaam o.i.d.
+		$result = "";
 	}
 	else
-	{ // niet ingelogd, display formulier
-		echo $result;
+	{
+		// haal het "normale" login formulier op
+		// ToDo - misschien beter een nieuw formulier opbouwen?
+		$result = wp_login_form(array('echo'=>false, 'remember'=>false));
+
+		// verwijder username-input
+		$begin = strpos($result, '<p class="login-username">');
+		$einde = strpos($result, '</p>', $begin)+4;
+		$result = substr($result, 0, $begin).substr($result, $einde);
+
+		// verwijder password-input
+		$begin = strpos($result, '<p class="login-password">');
+		$einde = strpos($result, '</p>', $begin)+4;
+		$result = substr($result, 0, $begin).substr($result, $einde);
 	}
+
+	if($result != "")
+		echo "<li>".$result."</li>";
 }
 
 // Authenticatie Hook
