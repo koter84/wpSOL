@@ -1,5 +1,5 @@
 === wpSOL ===
-Contributors: koter84
+Contributors: koter84, Gerrit Jan Faber
 Requires at least: 3.6
 Tested up to: 3.7.1
 Stable tag: trunk
@@ -8,7 +8,9 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-wpSOL connects WordPress to the Scouting Nederland OpenID server to allow people to login and register with their login-account from login.scouting.nl
+wpSOL connects WordPress to the Scouting Nederland OpenID server to allow people to login and register with their login-account from scouting.nl
+
+this plugin connects over https to login.scouting.nl to verify the login as part of the openid-standard
 
 == Installation ==
 login to sol.scouting.nl and change your role to "webmaster". go to login.scouting.nl move your mouse over "mijn websites" and click on "voeg beheerde website toe"

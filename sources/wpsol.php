@@ -13,9 +13,6 @@ Text Domain: wpSOL
 require 'openid.php';
 require 'common.php';
 
-require_once('wp-updates-plugin.php');
-new WPUpdatesPluginUpdater_241( 'http://wp-updates.com/api/2/plugin', plugin_basename(__FILE__));
-
 // Init wpsol-plugin
 function wpsol_init()
 {
