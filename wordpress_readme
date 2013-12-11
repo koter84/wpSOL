@@ -31,7 +31,7 @@ Yes, there is a settings-page where you can setup the Name the user gets in thei
 
 == Changelog ==
 
-= v0.3 (WiP) =
+= v0.3 =
 first public wordpress.org release
 make sidebar widget follow wordpress coding guidelines
 
