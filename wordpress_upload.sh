@@ -37,7 +37,7 @@ rsync --recursive --delete  sources/ /tmp/wpsol_tmp_svn/trunk/
 cp assets/readme.txt /tmp/wpsol_tmp_svn/trunk/readme.txt
 
 # cp screenshots to svn assets
-cp assets/screenshots* /tmp/wpsol_tmp_svn/assets/
+cp assets/screenshot* /tmp/wpsol_tmp_svn/assets/
 
 # changedir, remember current dir
 startdir=`pwd`
