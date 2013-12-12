@@ -34,7 +34,10 @@ svn checkout http://plugins.svn.wordpress.org/wpsol /tmp/wpsol_tmp_svn
 rsync --recursive --delete  sources/ /tmp/wpsol_tmp_svn/trunk/
 
 # cp readme file to svn trunk
-cp wordpress_readme /tmp/wpsol_tmp_svn/trunk/readme.txt
+cp assets/readme.txt /tmp/wpsol_tmp_svn/trunk/readme.txt
+
+# cp screenshots to svn assets
+cp assets/screenshots* /tmp/wpsol_tmp_svn/assets/
 
 # changedir, remember current dir
 startdir=`pwd`

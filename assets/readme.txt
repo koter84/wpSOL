@@ -14,6 +14,11 @@ wpSOL connects WordPress to the Scouting Nederland OpenID server to allow people
 
 this plugin connects over https to login.scouting.nl to verify the login as part of the openid-standard
 
+== Screenshots ==
+1. wp-login.php met scouting-login
+2. sidebar-widget in theme twenty-thirteen
+3. sidebar-widget in custom theme
+
 == Installation ==
 1. login to sol.scouting.nl and change your role to "webmaster". 
 1. go to login.scouting.nl move your mouse over "mijn websites" and click on "voeg beheerde website toe"
