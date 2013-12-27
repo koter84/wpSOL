@@ -1,7 +1,7 @@
 === wpSOL ===
 Contributors: koter84, Gerrit Jan Faber
 Requires at least: 3.6
-Tested up to: 3.7.1
+Tested up to: 3.8
 Stable tag: trunk
 Tags: scouting nederland, login, sidebar-widget
 License: GPLv2 or later
@@ -38,6 +38,12 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup the Name the user gets in their profile and enforce that.
 
 == Changelog ==
+
+= v0.4 =
+* setup default options during installation
+* better login-flow
+* username_prefix and autocreate new user options added
+* better display of options page
 
 = v0.3 =
 * first public wordpress.org release

@@ -62,14 +62,10 @@ function wpsol_sidebar_login()
 		$result = wp_login_form(array('echo'=>false, 'remember'=>false));
 
 		// verwijder username-input
-		$begin = strpos($result, '<p class="login-username">');
-		$einde = strpos($result, '</p>', $begin)+4;
-		$result = substr($result, 0, $begin).substr($result, $einde);
+		$result = substr($result, 0, strpos($result, '<p class="login-username">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-username">'))+4);
 
 		// verwijder password-input
-		$begin = strpos($result, '<p class="login-password">');
-		$einde = strpos($result, '</p>', $begin)+4;
-		$result = substr($result, 0, $begin).substr($result, $einde);
+		$result = substr($result, 0, strpos($result, '<p class="login-password">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-password">'))+4);
 	}
 
 	if($result != "")
@@ -82,11 +78,14 @@ function wpsol_authenticate_username_password()
 	# Change 'localhost' to your domain name.
 	$openid = new LightOpenID(str_replace(array("http://", "https://"), "", get_site_url()));
 
-	if ( array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'] ) {
-	// Attempt to authenticate user
-		try {
-			if(!$openid->mode) {
-				if(isset($_POST['openid_identifier'])) {
+	if ( array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'] )
+	{ // Attempt to authenticate user
+		try
+		{
+			if(!$openid->mode)
+			{
+				if(isset($_POST['openid_identifier']))
+				{
 					$openid->identity = 'https://login.scouting.nl/user/' . $_POST['openid_identifier'];
 					//$openid->returnUrl = plugins_url( 'return.php', __FILE__ );
 					# The following two lines request email, full name, and a nickname
@@ -96,26 +95,59 @@ function wpsol_authenticate_username_password()
 					header('Location: ' . $openid->authUrl());
 				}
 			} 
-		} catch(ErrorException $e) {
+		}
+		catch(ErrorException $e)
+		{
 			return new WP_Error( 'exception_error', "<strong>ERROR</strong>: " . $e->getMessage() );
 		}
 	}
-	if ($openid->mode) {
+	if ($openid->mode)
+	{
 		if($openid->validate())
 		{
+			$new_user = false;
+
 			$gegevens = $openid->getAttributes();
-			$username = $gegevens['namePerson/friendly'];
+			$username = get_option('wpsol_username_prefix').$gegevens['namePerson/friendly'];
+			$email = $gegevens['contact/email'];
 
 			$user_id = username_exists( $username );
+			$email_id = email_exists($email);
 
-			$new_user = false;
-			if( !$user_id and email_exists($email) == false )
-			{
-				$random_password = wp_generate_password( 18, false );
-				$user_id = wp_create_user( $username, $random_password, $gegevens['contact/email'] );
-				$new_user = true;
+			if( !$user_id and !$email_id )
+			{ // geen user_id, geen email_id, create new user.
+				if(get_option('wpsol_autocreate') == true)
+				{
+					$random_password = wp_generate_password( 18, false );
+					$user_id = wp_create_user( $username, $random_password, $email );
+					$new_user = true;
+				}
+				else
+				{
+					return false;
+				}
 			}
-			$user = get_user_by( 'id', $user_id );
+			elseif( !$user_id )
+			{ // geen user_id, wel email_id, login
+				$user = get_user_by( 'id', $email_id );
+			}
+			elseif( !$email_id )
+			{ // geen email_id, wel user_id, login
+				$user = get_user_by( 'id', $user_id );
+				// ToDo - update email for user ?
+			}
+			elseif( $user_id == $email_id )
+			{ // login.
+				$user = get_user_by( 'id', $user_id );
+			}
+			else
+			{ // uhm.
+				// ToDo - notificatie naar site-admin o.i.d.
+				// mogelijke fouten: 
+				//  - user_id != email_id ( wat te doen )
+				//  - ???
+				return false;
+			}
 
 			if($new_user OR get_option('wpsol_force_display_name'))
 			{
@@ -151,6 +183,17 @@ function wpsol_authenticate_username_password()
 	}
 }
 
+// Install function
+function wpsol_install()
+{
+	// set default option-values
+	update_option('wpsol_display_name', 'fullname');
+	update_option('wpsol_force_display_name', false);
+	update_option('wpsol_force_first_last_name', false);
+	update_option('wpsol_username_prefix', 'sn_');
+	update_option('wpsol_autocreate', true);
+}
+
 // Admin Settings Pagina
 function wpsol_admin_options()
 {
@@ -179,6 +222,14 @@ function wpsol_admin_options()
 			'name' => 'Forceer voornaam en achternaam bij elke login: ',
 			'type' => 'checkbox',
 		),
+		'wpsol_username_prefix' => array(
+			'name' => 'Voorvoegsel voor alle Scouting Nederland logins: ',
+			'type' => 'text',
+		),
+		'wpsol_autocreate' => array(
+			'name' => 'Automatisch nieuwe gebruikers aanmaken: ',
+			'type' => 'checkbox',
+		),
 	);
 
     // See if the user has posted us some information
@@ -197,9 +248,11 @@ function wpsol_admin_options()
     // Now display the settings editing screen
     ?>
 <div class="wrap">
+	<div id="icon-options-general" class="icon32"><br></div>
 	<h2>wpSOL [ScoutsOnLine] Settings</h2>
 	<form name="wpsol_settings_form" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+	<table class="form-table">
 	<?php
 
 	foreach($options as $key => $opt)
@@ -231,12 +284,13 @@ function wpsol_admin_options()
 				break;
 		}
 		echo "
-		<p>
-			".$opt['name']."
-			".$input."
-		</p>";
+		<tr valign=\"top\">
+			<th scope=\"row\"><label for=\"".$key."\">".$opt['name']."</label></th>
+			<td>".$input."</td>
+		</tr>";
 	}
 	?>
+	</table>
 	<p class="submit">
 	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
 	</p>
