@@ -1,0 +1,73 @@
+# Copyright (C) 2014 wpSOL
+# This file is distributed under the same license as the wpSOL package.
+msgid ""
+msgstr ""
+"Project-Id-Version: wpSOL 0.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wpsol\n"
+"POT-Creation-Date: 2014-01-02 11:11:04+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#
+msgid "Login with your SOL account"
+msgstr "Log in met je SOL account"
+
+#
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Je hebt onvoldoende rechten voor het bekijken van deze pagina."
+
+#
+msgid "Set display_name to: "
+msgstr "Stel display_name in op: "
+
+#
+msgid "Full name"
+msgstr "Volledige naam"
+
+#
+msgid "First name"
+msgstr "Voornaam"
+
+#
+msgid "Last name"
+msgstr "Achternaam"
+
+#
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#
+msgid "Force display_name on each login: "
+msgstr "Forceer display_name bij elke login: "
+
+#
+msgid "Force first and last name on each login: "
+msgstr "Forceer voornaam en achternaam bij elke login: "
+
+#
+msgid "Prefix for all Scouting Nederland users: "
+msgstr "Voorvoegsel voor alle Scouting Nederland users: "
+
+#
+msgid "By giving a prefix like sn_ you can easily identify which accounts are from Scouting Nederland"
+msgstr "Door een voorvoegsel in te stellen zoals sn_ kan je accounts van Scouting Nederland makkelijk terugvinden"
+
+#
+msgid "Automatically create new users: "
+msgstr "Automatisch nieuwe gebruikers aanmaken: "
+
+#
+msgid "Settings Saved"
+msgstr "Instellingen Opgeslagen"
+
+#
+msgid "wpSOL [ScoutsOnLine] Settings"
+msgstr "wpSOL [ScoutsOnLine] Instellingen"
+
+#
+msgid "Save Changes"
+msgstr "Wijzigingen Opslaan"

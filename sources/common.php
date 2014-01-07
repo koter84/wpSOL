@@ -37,7 +37,7 @@ function wpsol_wp_login_form($args = array()) // login_form action
 	}
 	</style>
 	<p style="margin-bottom: 8px;">
-		<label style="display: block; margin-bottom: 5px;">Log in met je SOL account<br />
+		<label style="display: block; margin-bottom: 5px;">'.__('Login with your SOL account', 'wpsol').'<br />
 		<input type="text" name="openid_identifier" id="openid_identifier" class="input openid_identifier" value="" size="20" /></label>
 	</p>';
 
@@ -205,30 +205,31 @@ function wpsol_admin_options()
     // variables for the field and option names 
 	$options = array(
 		'wpsol_display_name' => array(
-			'name' => 'Stel display_name in op: ',
+			'name' => __('Set display_name to: ', 'wpsol'),
 			'type' => 'select',
 			'options' => array(
-				'fullname' => 'Volledige naam', 
-				'firstname' => 'Voornaam', 
-				'lastname' => 'Achternaam', 
-				'username' => 'Gebruikersnaam',
+				'fullname' => __('Full name', 'wpsol'), 
+				'firstname' => __('First name', 'wpsol'), 
+				'lastname' => __('Last name', 'wpsol'), 
+				'username' => __('Username', 'wpsol'),
 			),
 		),
 		'wpsol_force_display_name' => array(
-			'name' => 'Forceer display_name bij elke login: ',
+			'name' => __('Force display_name on each login: ', 'wpsol'),
 			'type' => 'checkbox',
 		),
 		'wpsol_force_first_last_name' => array(
-			'name' => 'Forceer voornaam en achternaam bij elke login: ',
+			'name' => __('Force first and last name on each login: ', 'wpsol'),
+			'type' => 'checkbox',
+		),
+		'wpsol_autocreate' => array(
+			'name' => __('Automatically create new users: ', 'wpsol'),
 			'type' => 'checkbox',
 		),
 		'wpsol_username_prefix' => array(
-			'name' => 'Voorvoegsel voor alle Scouting Nederland logins: ',
+			'name' => __('Prefix for all Scouting Nederland users: ', 'wpsol'),
 			'type' => 'text',
-		),
-		'wpsol_autocreate' => array(
-			'name' => 'Automatisch nieuwe gebruikers aanmaken: ',
-			'type' => 'checkbox',
+			'help' => __('By giving a prefix like sn_ you can easily identify which accounts are from Scouting Nederland', 'wpsol'),
 		),
 	);
 
@@ -242,14 +243,14 @@ function wpsol_admin_options()
 			update_option( $key, $_POST[$key] );
 		}
 		// Put an settings updated message on the screen
-		echo "<div class=\"updated\"><p><strong>Instellingen Opgeslagen</strong></p></div>";
+		echo "<div class=\"updated\"><p><strong>".__('Instellingen Opgeslagen', 'wpsol')."</strong></p></div>";
     }
 
     // Now display the settings editing screen
     ?>
 <div class="wrap">
 	<div id="icon-options-general" class="icon32"><br></div>
-	<h2>wpSOL [ScoutsOnLine] Settings</h2>
+	<h2><?php _e('wpSOL [ScoutsOnLine] Settings', 'wpsol'); ?></h2>
 	<form name="wpsol_settings_form" method="post" action="">
 	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
 	<table class="form-table">
@@ -283,6 +284,10 @@ function wpsol_admin_options()
 				$input .= "</select>";
 				break;
 		}
+
+		if(isset($opt['help']))
+			$input .= "<p class=\"description\">".$opt['help']."</p>";
+
 		echo "
 		<tr valign=\"top\">
 			<th scope=\"row\"><label for=\"".$key."\">".$opt['name']."</label></th>

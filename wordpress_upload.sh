@@ -7,6 +7,15 @@ then
 	exit
 fi
 
+# update vertalingen
+lang_nl=`msgfmt -o sources/languages/wpsol-nl_NL.mo -v sources/languages/wpsol-nl_NL.po 2>&1`
+if [ "$lang_nl" != ".? vertaalde berichten." ]
+then
+	echo "Update NL: $lang_nl"
+	exit
+fi
+
+## ToDo - dit werkt niet helemaal goed
 # check that git is clean
 git_clean=`git clean -n sources/`
 if [ "$git_clean" != "" ]

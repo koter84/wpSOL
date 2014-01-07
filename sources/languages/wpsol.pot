@@ -1,0 +1,73 @@
+# Copyright (C) 2014 wpSOL
+# This file is distributed under the same license as the wpSOL package.
+msgid ""
+msgstr ""
+"Project-Id-Version: wpSOL 0.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wpsol\n"
+"POT-Creation-Date: 2014-01-02 11:11:04+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#
+msgid "Login with your SOL account"
+msgstr ""
+
+#
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#
+msgid "Set display_name to: "
+msgstr ""
+
+#
+msgid "Full name"
+msgstr ""
+
+#
+msgid "First name"
+msgstr ""
+
+#
+msgid "Last name"
+msgstr ""
+
+#
+msgid "Username"
+msgstr ""
+
+#
+msgid "Force display_name on each login: "
+msgstr ""
+
+#
+msgid "Force first and last name on each login: "
+msgstr ""
+
+#
+msgid "Prefix for all Scouting Nederland users: "
+msgstr ""
+
+#
+msgid "By giving a prefix like sn_ you can easily identify which accounts are from Scouting Nederland"
+msgstr ""
+
+#
+msgid "Automatically create new users: "
+msgstr ""
+
+#
+msgid "Settings Saved"
+msgstr ""
+
+#
+msgid "wpSOL [ScoutsOnLine] Settings"
+msgstr ""
+
+#
+msgid "Save Changes"
+msgstr ""
