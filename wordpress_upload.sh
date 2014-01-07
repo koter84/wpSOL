@@ -7,22 +7,45 @@ then
 	exit
 fi
 
-# update vertalingen
-lang_nl=`msgfmt -o sources/languages/wpsol-nl_NL.mo -v sources/languages/wpsol-nl_NL.po 2>&1`
-if [ "$lang_nl" != ".? vertaalde berichten." ]
+# check for existence of /tmp/i18ntools
+if [ -d /tmp/i18ntools ]
 then
-	echo "Update NL: $lang_nl"
-	exit
+	rm -r /tmp/i18ntools
 fi
 
-## ToDo - dit werkt niet helemaal goed
+# update vertalingen
+# - .pot file genereren
+svn checkout http://i18n.svn.wordpress.org/tools/trunk/ /tmp/i18ntools > /dev/null
+
+# ToDo - fail als svn checkout niet goed is gegaan !
+
+sed -i s/\'trunk\'/\'sources\'/ /tmp/i18ntools/makepot.php
+sed -i s/\'Y-m-d\ H:i:s+00:00\'/\'Y-m-d\ 00:00:00+00:00\'/ /tmp/i18ntools/makepot.php
+php /tmp/i18ntools/makepot.php wp-plugin sources/ sources/languages/wpsol.pot
+# - stel taal in
+lang="nl_NL"
+# - .pot vergelijken met .po (fail bij incompleet)
+lang_compare=`msgcmp sources/languages/wpsol-$lang.po sources/languages/wpsol.pot 2>&1`
+if [ "$lang_compare" != "" ]
+then
+	echo "incomplete vertaling $lang"
+	echo "$lang_compare"
+	exit
+fi
+# - make .mo file
+lang_make=`msgfmt -o sources/languages/wpsol-$lang.mo -v sources/languages/wpsol-$lang.po 2>&1`
+echo "Update $lang: $lang_make"
+# - verwijder i18ntools
+rm -r /tmp/i18ntools/
+
+
 # check that git is clean
-git_clean=`git clean -n sources/`
+git_clean=`git clean -n sources/; git status --porcelain sources/`
 if [ "$git_clean" != "" ]
 then
 	git status
 	echo
-	echo "er zijn untracked changes in de sources dir"
+	echo "er zijn pending changes in de sources dir"
 	exit
 fi
 

@@ -243,7 +243,7 @@ function wpsol_admin_options()
 			update_option( $key, $_POST[$key] );
 		}
 		// Put an settings updated message on the screen
-		echo "<div class=\"updated\"><p><strong>".__('Instellingen Opgeslagen', 'wpsol')."</strong></p></div>";
+		echo "<div class=\"updated\"><p><strong>".__('Settings Saved', 'wpsol')."</strong></p></div>";
     }
 
     // Now display the settings editing screen

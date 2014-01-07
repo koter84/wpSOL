@@ -3,9 +3,9 @@
 Plugin Name: wpSOL
 Plugin URI: http://bitbucket.org/gerritjanf/wpsol
 Description: Connect WordPress to the Scouting Nederland OpenID Server
-Author: Gerrit Jan
-Author URI: http://gerritjanfaber.nl
-Version: 0.4
+Author: Gerrit Jan en Dennis
+Author URI: http://www.gerritjanfaber.nl
+Version: 0.5
 License: 
 Text Domain: wpSOL
 */

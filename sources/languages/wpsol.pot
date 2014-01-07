@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the wpSOL package.
 msgid ""
 msgstr ""
-"Project-Id-Version: wpSOL 0.4\n"
+"Project-Id-Version: wpSOL 0.5\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpsol\n"
-"POT-Creation-Date: 2014-01-02 11:11:04+00:00\n"
+"POT-Creation-Date: 2014-01-07 00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,62 +12,84 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#
+#: common.php:40
 msgid "Login with your SOL account"
 msgstr ""
 
-#
+#: common.php:202
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#
+#: common.php:208
 msgid "Set display_name to: "
 msgstr ""
 
-#
+#: common.php:211
 msgid "Full name"
 msgstr ""
 
-#
+#: common.php:212
 msgid "First name"
 msgstr ""
 
-#
+#: common.php:213
 msgid "Last name"
 msgstr ""
 
-#
+#: common.php:214
 msgid "Username"
 msgstr ""
 
-#
+#: common.php:218
 msgid "Force display_name on each login: "
 msgstr ""
 
-#
+#: common.php:222
 msgid "Force first and last name on each login: "
 msgstr ""
 
-#
-msgid "Prefix for all Scouting Nederland users: "
-msgstr ""
-
-#
-msgid "By giving a prefix like sn_ you can easily identify which accounts are from Scouting Nederland"
-msgstr ""
-
-#
+#: common.php:226
 msgid "Automatically create new users: "
 msgstr ""
 
-#
+#: common.php:230
+msgid "Prefix for all Scouting Nederland users: "
+msgstr ""
+
+#: common.php:232
+msgid ""
+"By giving a prefix like sn_ you can easily identify which accounts are from "
+"Scouting Nederland"
+msgstr ""
+
+#: common.php:246
 msgid "Settings Saved"
 msgstr ""
 
-#
+#: common.php:253
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr ""
 
-#
+#: common.php:300
 msgid "Save Changes"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "wpSOL"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://bitbucket.org/gerritjanf/wpsol"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Connect WordPress to the Scouting Nederland OpenID Server"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Gerrit Jan en Dennis"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.gerritjanfaber.nl"
 msgstr ""

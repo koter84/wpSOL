@@ -39,6 +39,9 @@ Yes, there is a settings-page where you can setup the Name the user gets in thei
 
 == Changelog ==
 
+= v0.5 =
+* i18n-support added to plugin
+
 = v0.4 =
 * setup default options during installation
 * better login-flow
