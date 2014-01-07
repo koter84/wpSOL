@@ -18,7 +18,12 @@ fi
 svn checkout http://i18n.svn.wordpress.org/tools/trunk/ /tmp/i18ntools > /dev/null
 
 # ToDo - fail als svn checkout niet goed is gegaan !
-
+if [ ! -f /tmp/i18ntools/makepot.php ]
+then
+	echo "helaas i18ntools-checkout failed, stop."
+	exit
+fi
+# - fix wat 'foutjes' in makepot.php
 sed -i s/\'trunk\'/\'sources\'/ /tmp/i18ntools/makepot.php
 sed -i s/\'Y-m-d\ H:i:s+00:00\'/\'Y-m-d\ 00:00:00+00:00\'/ /tmp/i18ntools/makepot.php
 php /tmp/i18ntools/makepot.php wp-plugin sources/ sources/languages/wpsol.pot
@@ -61,6 +66,11 @@ fi
 
 # subversion checkout
 svn checkout http://plugins.svn.wordpress.org/wpsol /tmp/wpsol_tmp_svn
+if [ ! -f /tmp/wpsol_tmp_svn/trunk/wpsol.php ]
+then
+	echo "helaas plugin-checkout failed, stop."
+	exit
+fi
 
 # rsync git release to svn trunk
 rsync --recursive --delete  sources/ /tmp/wpsol_tmp_svn/trunk/
