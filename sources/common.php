@@ -76,15 +76,15 @@ function wpsol_sidebar_login()
 function wpsol_authenticate_username_password()
 {
 	# Change 'localhost' to your domain name.
-	$openid = new LightOpenID(str_replace(array("http://", "https://"), "", get_site_url()));
+	$openid = new LightOpenID(get_site_url());
 
-	if ( array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'] )
+	if( array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'] )
 	{ // Attempt to authenticate user
 		try
 		{
-			if(!$openid->mode)
+			if( !$openid->mode )
 			{
-				if(isset($_POST['openid_identifier']))
+				if( isset( $_POST['openid_identifier'] ) )
 				{
 					$openid->identity = 'https://login.scouting.nl/user/' . $_POST['openid_identifier'];
 					//$openid->returnUrl = plugins_url( 'return.php', __FILE__ );
@@ -96,14 +96,14 @@ function wpsol_authenticate_username_password()
 				}
 			} 
 		}
-		catch(ErrorException $e)
+		catch( ErrorException $e )
 		{
 			return new WP_Error( 'exception_error', "<strong>ERROR</strong>: " . $e->getMessage() );
 		}
 	}
-	if ($openid->mode)
+	if( $openid->mode )
 	{
-		if($openid->validate())
+		if( $openid->validate() )
 		{
 			$new_user = false;
 
@@ -112,11 +112,11 @@ function wpsol_authenticate_username_password()
 			$email = $gegevens['contact/email'];
 
 			$user_id = username_exists( $username );
-			$email_id = email_exists($email);
+			$email_id = email_exists( $email );
 
 			if( !$user_id and !$email_id )
 			{ // geen user_id, geen email_id, create new user.
-				if(get_option('wpsol_autocreate') == true)
+				if( get_option('wpsol_autocreate') == true )
 				{
 					$random_password = wp_generate_password( 18, false );
 					$user_id = wp_create_user( $username, $random_password, $email );
@@ -149,9 +149,9 @@ function wpsol_authenticate_username_password()
 				return false;
 			}
 
-			if($new_user OR get_option('wpsol_force_display_name'))
+			if( $new_user OR get_option('wpsol_force_display_name') )
 			{
-				switch(get_option('wpsol_display_name'))
+				switch( get_option('wpsol_display_name') )
 				{
 					case 'firstname':
 						$display_name = substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ") );
@@ -169,10 +169,10 @@ function wpsol_authenticate_username_password()
 				}
 
 				update_user_meta( $user->ID, 'nickname', $display_name );
-				wp_update_user( array ('ID' => $user->ID, 'display_name' => $display_name));    
+				wp_update_user( array( 'ID' => $user->ID, 'display_name' => $display_name ) );
 			}
 
-			if($new_user OR get_option('wpsol_force_first_last_name'))
+			if( $new_user OR get_option('wpsol_force_first_last_name') )
 			{
 				update_user_meta( $user->ID, 'first_name', substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ") ) );
 				update_user_meta( $user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 ) );

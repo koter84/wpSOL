@@ -17,7 +17,7 @@ fi
 # - .pot file genereren
 svn checkout http://i18n.svn.wordpress.org/tools/trunk/ /tmp/i18ntools > /dev/null
 
-# ToDo - fail als svn checkout niet goed is gegaan !
+# - fail als svn checkout niet goed is gegaan !
 if [ ! -f /tmp/i18ntools/makepot.php ]
 then
 	echo "helaas i18ntools-checkout failed, stop."
