@@ -41,6 +41,9 @@ Yes, there is a settings-page where you can setup the Name the user gets in thei
 
 == Changelog ==
 
+= v1.0 =
+* code cleanup
+
 = v0.5 =
 * i18n-support added to plugin
 
