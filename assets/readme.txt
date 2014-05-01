@@ -3,7 +3,7 @@ Contributors: koter84, Gerrit Jan Faber
 Requires at least: 3.6
 Tested up to: 3.9
 Stable tag: trunk
-Tags: scouting nederland, login, sidebar-widget
+Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
