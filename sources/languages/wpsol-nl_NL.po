@@ -85,17 +85,17 @@ msgid "wpSOL"
 msgstr "wpSOL"
 
 #. Plugin URI of the plugin/theme
-msgid "http://bitbucket.org/gerritjanf/wpsol"
-msgstr "http://bitbucket.org/gerritjanf/wpsol"
+msgid "https://github.com/koter84/wpSOL"
+msgstr "http://github.com/koter84/wpSOL"
 
 #. Description of the plugin/theme
 msgid "Connect WordPress to the Scouting Nederland OpenID Server"
 msgstr "Gebruik de Scouting Nederland OpenID Server met WordPress"
 
 #. Author of the plugin/theme
-msgid "Gerrit Jan en Dennis"
+msgid "Gerrit Jan and Dennis"
 msgstr "Gerrit Jan en Dennis"
 
 #. Author URI of the plugin/theme
-msgid "http://www.gerritjanfaber.nl"
-msgstr "http://www.gerritjanfaber.nl"
+msgid "http://wordpress.org/plugins/wpsol/"
+msgstr "http://wordpress.org/plugins/wpsol/"

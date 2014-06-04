@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpSOL 1.0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpsol\n"
-"POT-Creation-Date: 2014-05-01 00:00:00+00:00\n"
+"POT-Creation-Date: 2014-06-04 00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -79,7 +79,7 @@ msgid "wpSOL"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://bitbucket.org/gerritjanf/wpsol"
+msgid "https://github.com/koter84/wpSOL"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -87,9 +87,9 @@ msgid "Connect WordPress to the Scouting Nederland OpenID Server"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Gerrit Jan en Dennis"
+msgid "Gerrit Jan and Dennis"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://www.gerritjanfaber.nl"
+msgid "http://wordpress.org/plugins/wpsol/"
 msgstr ""

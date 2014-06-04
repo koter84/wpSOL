@@ -14,7 +14,7 @@ wpSOL connects WordPress to the Scouting Nederland OpenID server to allow people
 
 this plugin connects over https to login.scouting.nl to verify the login as part of the openid-standard
 
-bugs and feature-requests can go to: [BitBucket](https://bitbucket.org/gerritjanf/wpsol/issues?status=new&status=open)
+bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/issues)
 
 == Screenshots ==
 1. wp-login.php met scouting-login
@@ -40,6 +40,9 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup the Name the user gets in their profile and enforce that.
 
 == Changelog ==
+
+= v1.0.2 =
+* moved code from bitbucket to github
 
 = v1.0.1 =
 * some minor changes
