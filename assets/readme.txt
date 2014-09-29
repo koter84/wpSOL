@@ -41,6 +41,9 @@ Yes, there is a settings-page where you can setup the Name the user gets in thei
 
 == Changelog ==
 
+= v1.0.3 =
+* added a redirect option for login and logout to go to the frontpage
+
 = v1.0.2 =
 * moved code from bitbucket to github
 

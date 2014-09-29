@@ -23,7 +23,7 @@ function wpsol_wp_login_form($args = array()) // login_form action
 		'sidebar' => false,
 	);
 	$args = wp_parse_args( $args, $defaults );
-	
+
 	if( !$args['sidebar'] )
 		$echo = '<hr id="openid_split" style="clear: both; margin-bottom: 1.0em; border: 0; border-top: 1px solid #999; height: 1px;" />';
 
@@ -32,8 +32,8 @@ function wpsol_wp_login_form($args = array()) // login_form action
 	#openid_enabled_link, .openid_link, #openid_identifier, #commentform #openid_identifier {
 		background-image: url(\'' . plugins_url( 'scnllogo.png', __FILE__ ) .  '\');
 		background-position: 3px 50%;
-		background-repeat: no-repeat; 
-		padding-left: 21px !important; 
+		background-repeat: no-repeat;
+		padding-left: 21px !important;
 	}
 	</style>
 	<p style="margin-bottom: 8px;">
@@ -94,7 +94,7 @@ function wpsol_authenticate_username_password()
 					$openid->optional = array('birthDate','person/gender','contact/postalCode/home','contact/country/home','pref/language','pref/timezone');
 					header('Location: ' . $openid->authUrl());
 				}
-			} 
+			}
 		}
 		catch( ErrorException $e )
 		{
@@ -143,7 +143,7 @@ function wpsol_authenticate_username_password()
 			else
 			{ // uhm.
 				// ToDo - notificatie naar site-admin o.i.d.
-				// mogelijke fouten: 
+				// mogelijke fouten:
 				//  - user_id != email_id ( wat te doen )
 				//  - ???
 				return false;
@@ -176,7 +176,10 @@ function wpsol_authenticate_username_password()
 			{
 				update_user_meta( $user->ID, 'first_name', substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ") ) );
 				update_user_meta( $user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 ) );
-			}			
+			}
+
+			// add login filter to redirect
+			add_filter( 'login_redirect', 'wpsol_login_redirect' );
 
 			return $user;
 		}
@@ -192,6 +195,31 @@ function wpsol_install()
 	update_option('wpsol_force_first_last_name', false);
 	update_option('wpsol_username_prefix', 'sn_');
 	update_option('wpsol_autocreate', true);
+	update_option('wpsol_login_redirect', 'default');
+	update_option('wpsol_logout_redirect', 'default');
+}
+
+// Redirect after login
+function wpsol_login_redirect()
+{
+	if( get_option('wpsol_login_redirect') == "frontpage" )
+	{
+		return "/";
+	}
+	elseif( get_option('wpsol_login_redirect') == "dashboard" )
+	{
+		return "/wp-admin/";
+	}
+}
+
+// Redirect after logout
+function wpsol_logout_redirect()
+{
+	if( get_option('wpsol_logout_redirect') == "frontpage" )
+	{
+		wp_redirect( home_url() );
+		exit;
+	}
 }
 
 // Admin Settings Pagina
@@ -202,15 +230,15 @@ function wpsol_admin_options()
 		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 	}
 
-    // variables for the field and option names 
+	// variables for the field and option names
 	$options = array(
 		'wpsol_display_name' => array(
 			'name' => __('Set display_name to: ', 'wpsol'),
 			'type' => 'select',
 			'options' => array(
-				'fullname' => __('Full name', 'wpsol'), 
-				'firstname' => __('First name', 'wpsol'), 
-				'lastname' => __('Last name', 'wpsol'), 
+				'fullname' => __('Full name', 'wpsol'),
+				'firstname' => __('First name', 'wpsol'),
+				'lastname' => __('Last name', 'wpsol'),
 				'username' => __('Username', 'wpsol'),
 			),
 		),
@@ -231,11 +259,28 @@ function wpsol_admin_options()
 			'type' => 'text',
 			'help' => __('By giving a prefix like sn_ you can easily identify which accounts are from Scouting Nederland', 'wpsol'),
 		),
+		'wpsol_login_redirect' => array(
+			'name' => __('After a successful login redirect user to: ', 'wpsol'),
+			'type' => 'select',
+			'options' => array(
+				'default' => __('Default (no action)', 'wpsol'),
+				'frontpage' => __('Frontpage', 'wpsol'),
+				'dashboard' => __('Dashboard', 'wpsol'),
+			),
+		),
+		'wpsol_logout_redirect' => array(
+			'name' => __('After logout redirect user to: ', 'wpsol'),
+			'type' => 'select',
+			'options' => array(
+				'default' => __('Default (no action)', 'wpsol'),
+				'frontpage' => __('Frontpage', 'wpsol'),
+			),
+		),
 	);
 
-    // See if the user has posted us some information
-    $hidden_field_name = 'wpsol_hidden';
-    if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' )
+	// See if the user has posted us some information
+	$hidden_field_name = 'wpsol_hidden';
+	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' )
 	{
 		foreach($options as $key => $opt)
 		{

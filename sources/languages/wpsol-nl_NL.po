@@ -3,7 +3,7 @@
 # Dennis Koot <koter84@gmail.com>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: wpSOL 0.5\n"
+"Project-Id-Version: wpSOL 1.0.3\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wpsol\n"
 "POT-Creation-Date: 2014-01-07 15:09:59+00:00\n"
 "PO-Revision-Date: 2014-01-07 16:14+0200\n"
@@ -20,47 +20,47 @@ msgstr ""
 msgid "Login with your SOL account"
 msgstr "Log in met je SOL account"
 
-#: common.php:202
+#: common.php:230
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Je hebt onvoldoende rechten voor het bekijken van deze pagina."
 
-#: common.php:208
+#: common.php:236
 msgid "Set display_name to: "
 msgstr "Stel display_name in op: "
 
-#: common.php:211
+#: common.php:239
 msgid "Full name"
 msgstr "Volledige naam"
 
-#: common.php:212
+#: common.php:240
 msgid "First name"
 msgstr "Voornaam"
 
-#: common.php:213
+#: common.php:241
 msgid "Last name"
 msgstr "Achternaam"
 
-#: common.php:214
+#: common.php:242
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: common.php:218
+#: common.php:246
 msgid "Force display_name on each login: "
 msgstr "Forceer display_name bij elke login: "
 
-#: common.php:222
+#: common.php:250
 msgid "Force first and last name on each login: "
 msgstr "Forceer voornaam en achternaam bij elke login: "
 
-#: common.php:226
+#: common.php:254
 msgid "Automatically create new users: "
 msgstr "Automatisch nieuwe gebruikers aanmaken: "
 
-#: common.php:230
+#: common.php:258
 msgid "Prefix for all Scouting Nederland users: "
 msgstr "Voorvoegsel voor alle Scouting Nederland users: "
 
-#: common.php:232
+#: common.php:260
 msgid ""
 "By giving a prefix like sn_ you can easily identify which accounts are from "
 "Scouting Nederland"
@@ -68,15 +68,35 @@ msgstr ""
 "Door een voorvoegsel in te stellen zoals sn_ kan je accounts van Scouting "
 "Nederland makkelijk terugvinden"
 
-#: common.php:246
+#: common.php:263
+msgid "After a successful login redirect user to: "
+msgstr "Na een succesvolle login redirect naar: "
+
+#: common.php:266 common.php:275
+msgid "Default (no action)"
+msgstr "Standaard (geen actie)"
+
+#: common.php:267 common.php:276
+msgid "Frontpage"
+msgstr "Frontpage"
+
+#: common.php:268
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: common.php:272
+msgid "After logout redirect user to: "
+msgstr "Na uitloggen redirect naar: "
+
+#: common.php:291
 msgid "Settings Saved"
 msgstr "Instellingen Opgeslagen"
 
-#: common.php:253
+#: common.php:298
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr "wpSOL [ScoutsOnLine] Instellingen"
 
-#: common.php:300
+#: common.php:345
 msgid "Save Changes"
 msgstr "Wijzigingen Opslaan"
 
