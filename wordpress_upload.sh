@@ -50,8 +50,13 @@ if [ "$git_clean" != "" ]
 then
 	git status
 	echo
-	echo "er zijn pending changes in de sources dir"
-	exit
+	echo "er zijn pending changes in de sources dir (use --force to override)"
+	if [ "$1" == "--force" ]
+	then
+		echo "continue anyway..."
+	else
+		exit
+	fi
 fi
 
 # check that git is on branch master
