@@ -131,7 +131,7 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 = 1.1.0 =
 Let op! De login-widget is herschreven zodat de opbouw hetzelfde is als standaard widgets.
 Hierdoor moet je de widget opnieuw plaatsen op je site, en eventuele custom css hiervoor werkt niet meer correct!
-Houd er dus rekening mee dat na deze update je wellicht het een en ander moet aanpassen aan je custom-thema.
+Houd er dus rekening mee dat na deze update je je custom-thema moet bijwerken.
 
 == Translations ==
 

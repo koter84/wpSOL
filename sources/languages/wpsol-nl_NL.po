@@ -42,7 +42,7 @@ msgid ""
 "The login was cancelled, either the user cancelled the request, or login."
 "scouting.nl isn't aware of your domain (%s)"
 msgstr ""
-"Het inloggen is geannuleerd, de gebruiker heeft geen toes, of je domein (%s) "
+"Het inloggen is geannuleerd, de gebruiker heeft geen toestemming gegeven, of je domein (%s) "
 "is niet bekend bij login.scouting.nl "
 
 #: common.php:221
