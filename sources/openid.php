@@ -349,7 +349,7 @@ class LightOpenID
             $this->headers = $this->parse_header_array($http_response_header, $update_claimed_id);
         }
 
-        return file_get_contents($url, false, $context);
+        return $data;
     }
 
     protected function request($url, $method='GET', $params=array(), $update_claimed_id=false)
@@ -737,12 +737,10 @@ class LightOpenID
         }
 
         $params['openid.mode'] = 'check_authentication';
-		
+
         $response = $this->request($server, 'POST', $params);
 
-		// Scouting NL reageert met 1 of 0. De waardes matchen dus niet als dit getest wordt. Fix: response direct terug sturen.
-        //return preg_match('/is_valid\s*:\s*true/i', $response);
-		return print_r($response, true);
+        return preg_match('/is_valid\s*:\s*true/i', $response);
     }
 
     protected function getAxAttributes()

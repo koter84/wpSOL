@@ -50,10 +50,25 @@ function wpsol_wp_login_form($args = array()) // login_form action
 // Sidebar Login
 function wpsol_sidebar_login()
 {
+	$result = "";
+
 	if( is_user_logged_in() )
 	{ // ingelogd
-		// ToDo - display ingelogde gebruikersnaam o.i.d.
-		$result = "";
+		if( get_option('wpsol_widget_links_show') )
+		{
+			$result = "<h1 class=\"widget-title\">".__('Members-Area', 'wpsol')."</h1>";
+
+			$result .= "<ul>";
+			// link naar nieuw bericht
+			if(current_user_can('edit_posts'))
+				$result .= "<li><a href=\"/wp-admin/post-new.php\">".__('Write a Post', 'wpsol')."</a></li>";
+			// link naar upload
+			if(current_user_can('upload_files'))
+				$result .= "<li><a href=\"/wp-admin/media-new.php\">".__('Upload Media', 'wpsol')."</a></li>";
+			// link naar logout
+			$result .= "<li><a href=\"/wp-login.php?action=logout\">".__('Log Out')."</a></li>";
+			$result .= "</ul>";
+		}
 	}
 	else
 	{
@@ -69,13 +84,30 @@ function wpsol_sidebar_login()
 	}
 
 	if($result != "")
-		echo "<li>".$result."</li>";
+		echo "<aside id=\"wpsol_widget-5\" class=\"widget widget_wpsol\">".$result."</aside>";
+}
+
+function wpsol_sidebar_login_control()
+{
+	//the form is submitted, save into database
+	if (isset($_POST['submitted']))
+	{
+		update_option('wpsol_widget_links_show', $_POST['widget_links_show']);
+	}
+
+	if(get_option('wpsol_widget_links_show') == 1)
+		$sel = "CHECKED";
+	else
+		$sel = "";
+	echo "<br/>".__('Show links when logged in: ', 'wpsol')." <input type=\"checkbox\" name=\"widget_links_show\" value=\"1\" ".$sel." /><br/>";
+
+	echo "<br/><input type=\"hidden\" name=\"submitted\" value=\"1\" />";
 }
 
 // Authenticatie Hook
 function wpsol_authenticate_username_password()
 {
-	# Change 'localhost' to your domain name.
+	# get domain-name from wordpress-settings
 	$openid = new LightOpenID(get_site_url());
 
 	if( array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'] )
@@ -183,6 +215,16 @@ function wpsol_authenticate_username_password()
 
 			return $user;
 		}
+		elseif($openid->mode == "cancel")
+		{
+			global $error;
+			$error = sprintf(__('The login was cancelled, either the user cancelled the request, or login.scouting.nl isn\'t aware of your domain (%s)', 'wpsol'), get_site_url()).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
+		}
+		else
+		{
+			global $error;
+			$error = sprintf(__('The login failed with openid-mode: "%s"', 'wpsol'), $openid->mode).'<br/><a href="https://wordpress.org/support/plugin/wpsol">'.__('wpSOL Support', 'wpsol').'</a>';
+		}
 	}
 }
 
@@ -197,6 +239,8 @@ function wpsol_install()
 	update_option('wpsol_autocreate', true);
 	update_option('wpsol_login_redirect', 'default');
 	update_option('wpsol_logout_redirect', 'default');
+	// widget options
+	update_option('wpsol_widget_links_show', false);
 }
 
 // Redirect after login
