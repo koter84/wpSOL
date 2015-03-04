@@ -24,8 +24,10 @@ function wpsol_wp_login_form($args = array()) // login_form action
 	);
 	$args = wp_parse_args( $args, $defaults );
 
+	$echo = "";
+
 	if( !$args['sidebar'] )
-		$echo = '<hr id="openid_split" style="clear: both; margin-bottom: 1.0em; border: 0; border-top: 1px solid #999; height: 1px;" />';
+		$echo .= '<hr id="openid_split" style="clear: both; margin-bottom: 1.0em; border: 0; border-top: 1px solid #999; height: 1px;" />';
 
 	$echo .= '
 	<style>
@@ -329,7 +331,7 @@ function wpsol_admin_options()
 		foreach($options as $key => $opt)
 		{
 			// Save the posted value in the database
-			update_option( $key, $_POST[$key] );
+			update_option( $key, @$_POST[$key] );
 		}
 		// Put an settings updated message on the screen
 		echo "<div class=\"updated\"><p><strong>".__('Settings Saved', 'wpsol')."</strong></p></div>";

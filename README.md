@@ -101,6 +101,9 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 
 ## Changelog ##
 
+### 1.1.1 ###
+* minor fixes to supress some warnings
+
 ### 1.1.0 ###
 * Scouting Nederland changed the response from the server, now it works with standard LightOpenID again
 * updated readme to include dutch translations
