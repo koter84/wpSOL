@@ -42,11 +42,20 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ###1. wp-login.php met scouting-login###
 ![wp-login.php met scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png)
 
-###2. sidebar-widget in theme twenty-thirteen###
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-2.png)
+###2. sidebar-widget in theme twenty-fifteen###
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png)
 
-###3. sidebar-widget in custom theme###
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-3.png)
+###3. sidebar-widget in theme twenty-fourteen###
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png)
+
+###4. sidebar-widget in theme twenty-thirteen###
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png)
+
+###5. sidebar-widget in theme twenty-twelve###
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png)
+
+###6. sidebar-widget in custom theme###
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png)
 
 
 ## Installation ##

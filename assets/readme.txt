@@ -30,8 +30,11 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 == Screenshots ==
 
 1. wp-login.php met scouting-login
-2. sidebar-widget in theme twenty-thirteen
-3. sidebar-widget in custom theme
+2. sidebar-widget in theme twenty-fifteen
+3. sidebar-widget in theme twenty-fourteen
+4. sidebar-widget in theme twenty-thirteen
+5. sidebar-widget in theme twenty-twelve
+6. sidebar-widget in custom theme
 
 == Installation ==
 
