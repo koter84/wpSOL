@@ -11,13 +11,13 @@ Verbind Wordpress met de Scouting Nederland OpenID-server
 
 ## Index ##
 
-[Description](#description)
-[Screenshots](#screenshots)
-[Installation](#installation)
-[Frequently-Asked-Questions](#frequently-asked-questions)
-[Changelog](#changelog)
-[Upgrade-Notice](#upgrade-notice)
-[Translations](#translations)
+* [Description](#description)
+* [Screenshots](#screenshots)
+* [Installation](#installation)
+* [Frequently-Asked-Questions](#frequently-asked-questions)
+* [Changelog](#changelog)
+* [Upgrade-Notice](#upgrade-notice)
+* [Translations](#translations)
 
 ## Description ##
 
