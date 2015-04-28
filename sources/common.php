@@ -180,7 +180,10 @@ function wpsol_authenticate_username_password()
 				// mogelijke fouten:
 				//  - user_id != email_id ( wat te doen )
 				//  - ???
-				return false;
+				global $error;
+				$error = sprintf(__('wp-user-id based on username (%s) does not match wp-user-id based on email (%s)', 'wpsol'), $username, $email).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
+				break;
+				//return false;
 			}
 
 			if( $new_user OR get_option('wpsol_force_display_name') )
