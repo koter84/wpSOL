@@ -1,7 +1,7 @@
 # wpSOL #
 **Contributors:** koter84, Gerrit Jan Faber  
 **Requires at least:** 3.6  
-**Tested up to:** 4.2  
+**Tested up to:** 4.3  
 **Stable tag:** trunk  
 **Tags:** scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget  
 **License:** GPLv2 or later  
@@ -40,22 +40,22 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ## Screenshots ##
 
 ###1. wp-login.php met scouting-login###
-![wp-login.php met scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2015042811)
+![wp-login.php met scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2015102616)
 
 ###2. sidebar-widget in theme twenty-fifteen###
-![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2015042811)
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2015102616)
 
 ###3. sidebar-widget in theme twenty-fourteen###
-![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2015042811)
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2015102616)
 
 ###4. sidebar-widget in theme twenty-thirteen###
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2015042811)
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2015102616)
 
 ###5. sidebar-widget in theme twenty-twelve###
-![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2015042811)
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2015102616)
 
 ###6. sidebar-widget in custom theme###
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2015042811)
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2015102616)
 
 
 ## Installation ##
