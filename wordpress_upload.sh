@@ -62,17 +62,6 @@ then
 fi
 
 # check for existence of /tmp/i18ntools
-if [ -d /tmp/i18ntools ]
-then
-	# only force a refresh on a production run
-	if [ $wuTEST == 0 ] && [ $wuDRY == 0 ]
-	then
-		echo "> remove /tmp/i18ntools"
-		rm -r /tmp/i18ntools
-	fi
-fi
-
-# download i18ntools
 if [ ! -d /tmp/i18ntools/ ]
 then
 	echo "> checkout i18ntools"
@@ -323,3 +312,7 @@ rm -r /tmp/wpsol_tmp_svn
 
 echo "> Done!"
 
+echo "> you should:"
+echo "> git push"
+echo "> git tag $cv_wpsol"
+echo "> git push origin $cv_wpsol"

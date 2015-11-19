@@ -1,7 +1,7 @@
 === wpSOL ===
 Contributors: koter84, Gerrit Jan Faber
 Requires at least: 3.6
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: trunk
 Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
@@ -87,6 +87,12 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup a redirect after login or logout and setup the Name the user gets in their profile and enforce that.
 
 == Changelog ==
+
+= 1.1.4 =
+* checked for compatibility with wordpress 4.4
+
+= 1.1.3 =
+* checked for compatibility with wordpress 4.3
 
 = 1.1.2 =
 * added error message when username and email exist in wordpress, but are not the same account.
