@@ -1,4 +1,8 @@
 # wpSOL #
+[![Wordpress-Plugin](https://img.shields.io/wordpress/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Plugin](https://img.shields.io/wordpress/plugin/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Plugin](https://img.shields.io/wordpress/plugin/dt/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+
 **Contributors:** koter84, Gerrit Jan Faber  
 **Requires at least:** 3.6  
 **Tested up to:** 4.4  
@@ -40,22 +44,22 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ## Screenshots ##
 
 ###1. wp-login.php met scouting-login###
-![wp-login.php met scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2015111912)
+![wp-login.php met scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2015120800)
 
 ###2. sidebar-widget in theme twenty-fifteen###
-![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2015111912)
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2015120800)
 
 ###3. sidebar-widget in theme twenty-fourteen###
-![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2015111912)
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2015120800)
 
 ###4. sidebar-widget in theme twenty-thirteen###
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2015111912)
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2015120800)
 
 ###5. sidebar-widget in theme twenty-twelve###
-![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2015111912)
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2015120800)
 
 ###6. sidebar-widget in custom theme###
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2015111912)
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2015120800)
 
 
 ## Installation ##

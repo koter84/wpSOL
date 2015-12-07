@@ -131,6 +131,11 @@ do
 	line_lower=`echo "$line" | tr [:upper:] [:lower:]`
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/wpsol_readme
+
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+
 sed -i s/"## Description ##"/"${index}\n## Description ##"/ README.md
 sed -i s/"\[NL\]"/"### NL"/ README.md
 sed -i s/"\[EN\]"/"### EN"/ README.md
