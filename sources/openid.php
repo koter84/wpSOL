@@ -154,7 +154,7 @@ class LightOpenID
         return !!gethostbynamel($server);
     }
 
-    protected function request_curl($url, $method='GET', $params=array(), $update_claimed_id)
+    protected function requestCurl($url, $method='GET', $params=array(), $update_claimed_id)
     {
         $params = http_build_query($params, '', '&');
         $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
@@ -232,7 +232,7 @@ class LightOpenID
         return $response;
     }
 
-    protected function parse_header_array($array, $update_claimed_id)
+    protected function parseHeaderArray($array, $update_claimed_id)
     {
         $headers = array();
         foreach($array as $header) {
@@ -262,7 +262,7 @@ class LightOpenID
         return $headers;
     }
 
-    protected function request_streams($url, $method='GET', $params=array(), $update_claimed_id)
+    protected function requestStreams($url, $method='GET', $params=array(), $update_claimed_id)
     {
         if(!$this->hostExists($url)) {
             throw new ErrorException("Could not connect to $url.", 404);
@@ -322,11 +322,11 @@ class LightOpenID
                 # a GET.
                 $args = func_get_args();
                 $args[1] = 'GET';
-                call_user_func_array(array($this, 'request_streams'), $args);
+                call_user_func_array(array($this, 'requestStreams'), $args);
                 return $this->headers;
             }
 
-            $headers = $this->parse_header_array($headers, $update_claimed_id);
+            $headers = $this->parseHeaderArray($headers, $update_claimed_id);
 
             # And restore them.
             stream_context_get_default($default);
@@ -346,7 +346,7 @@ class LightOpenID
         # This is a hack for providers who don't support HEAD requests.
         # It just creates the headers array for the last request in $this->headers.
         if(isset($http_response_header)) {
-            $this->headers = $this->parse_header_array($http_response_header, $update_claimed_id);
+            $this->headers = $this->parseHeaderArray($http_response_header, $update_claimed_id);
         }
 
         return $data;
@@ -357,12 +357,12 @@ class LightOpenID
         if (function_exists('curl_init')
             && (!in_array('https', stream_get_wrappers()) || !ini_get('safe_mode') && !ini_get('open_basedir'))
         ) {
-            return $this->request_curl($url, $method, $params, $update_claimed_id);
+            return $this->requestCurl($url, $method, $params, $update_claimed_id);
         }
-        return $this->request_streams($url, $method, $params, $update_claimed_id);
+        return $this->requestStreams($url, $method, $params, $update_claimed_id);
     }
 
-    protected function build_url($url, $parts)
+    protected function buildUrl($url, $parts)
     {
         if (isset($url['query'], $parts['query'])) {
             $parts['query'] = $url['query'] . '&' . $parts['query'];
@@ -423,7 +423,7 @@ class LightOpenID
 
                 $next = false;
                 if (isset($headers['x-xrds-location'])) {
-                    $url = $this->build_url(parse_url($url), parse_url(trim($headers['x-xrds-location'])));
+                    $url = $this->buildUrl(parse_url($url), parse_url(trim($headers['x-xrds-location'])));
                     $next = true;
                 }
 
@@ -499,13 +499,13 @@ class LightOpenID
                 $content = $this->request($url, 'GET', array(), true);
 
                 if (isset($this->headers['x-xrds-location'])) {
-                    $url = $this->build_url(parse_url($url), parse_url(trim($this->headers['x-xrds-location'])));
+                    $url = $this->buildUrl(parse_url($url), parse_url(trim($this->headers['x-xrds-location'])));
                     continue;
                 }
 
                 $location = $this->htmlTag($content, 'meta', 'http-equiv', 'X-XRDS-Location', 'content');
                 if ($location) {
-                    $url = $this->build_url(parse_url($url), parse_url($location));
+                    $url = $this->buildUrl(parse_url($url), parse_url($location));
                     continue;
                 }
             }
@@ -606,7 +606,7 @@ class LightOpenID
         return $params;
     }
 
-    protected function authUrl_v1($immediate)
+    protected function authUrlv1($immediate)
     {
         $returnUrl = $this->returnUrl;
         # If we have an openid.delegate that is different from our claimed id,
@@ -623,11 +623,11 @@ class LightOpenID
             'openid.trust_root' => $this->trustRoot,
             ) + $this->sregParams();
 
-        return $this->build_url(parse_url($this->server)
+        return $this->buildUrl(parse_url($this->server)
                                , array('query' => http_build_query($params, '', '&')));
     }
 
-    protected function authUrl_v2($immediate)
+    protected function authUrlv2($immediate)
     {
         $params = array(
             'openid.ns'          => 'http://specs.openid.net/auth/2.0',
@@ -655,7 +655,7 @@ class LightOpenID
             $params['openid.claimed_id'] = $this->claimed_id;
         }
 
-        return $this->build_url(parse_url($this->server)
+        return $this->buildUrl(parse_url($this->server)
                                , array('query' => http_build_query($params, '', '&')));
     }
 
@@ -671,9 +671,9 @@ class LightOpenID
         if (!$this->server) $this->discover($this->identity);
 
         if ($this->version == 2) {
-            return $this->authUrl_v2($immediate);
+            return $this->authUrlv2($immediate);
         }
-        return $this->authUrl_v1($immediate);
+        return $this->authUrlv1($immediate);
     }
 
     /**
@@ -711,7 +711,7 @@ class LightOpenID
             && $this->data['openid_claimed_id'] != $this->data['openid_identity']
         ) {
             # If it's an OpenID 1 provider, and we've got claimed_id,
-            # we have to append it to the returnUrl, like authUrl_v1 does.
+            # we have to append it to the returnUrl, like authUrlv1 does.
             $this->returnUrl .= (strpos($this->returnUrl, '?') ? '&' : '?')
                              .  'openid.claimed_id=' . $this->claimed_id;
         }

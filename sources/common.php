@@ -121,7 +121,6 @@ function wpsol_authenticate_username_password()
 				if( isset( $_POST['openid_identifier'] ) )
 				{
 					$openid->identity = 'https://login.scouting.nl/user/' . $_POST['openid_identifier'];
-					//$openid->returnUrl = plugins_url( 'return.php', __FILE__ );
 					# The following two lines request email, full name, and a nickname
 					# from the provider. Remove them if you don't need that data.
 					$openid->required = array('contact/email','namePerson', 'namePerson/friendly');
@@ -148,9 +147,9 @@ function wpsol_authenticate_username_password()
 			$user_id = username_exists( $username );
 			$email_id = email_exists( $email );
 
-			if( !$user_id and !$email_id )
+			if( !$user_id && !$email_id )
 			{ // geen user_id, geen email_id, create new user.
-				if( get_option('wpsol_autocreate') == true )
+				if( get_option('wpsol_autocreate') === true )
 				{
 					$random_password = wp_generate_password( 18, false );
 					$user_id = wp_create_user( $username, $random_password, $email );
@@ -183,10 +182,9 @@ function wpsol_authenticate_username_password()
 				global $error;
 				$error = sprintf(__('wp-user-id based on username (%s) does not match wp-user-id based on email (%s)', 'wpsol'), $username, $email).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
 				break;
-				//return false;
 			}
 
-			if( $new_user OR get_option('wpsol_force_display_name') )
+			if( $new_user || get_option('wpsol_force_display_name') )
 			{
 				switch( get_option('wpsol_display_name') )
 				{
@@ -209,7 +207,7 @@ function wpsol_authenticate_username_password()
 				wp_update_user( array( 'ID' => $user->ID, 'display_name' => $display_name ) );
 			}
 
-			if( $new_user OR get_option('wpsol_force_first_last_name') )
+			if( $new_user || get_option('wpsol_force_first_last_name') )
 			{
 				update_user_meta( $user->ID, 'first_name', substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ") ) );
 				update_user_meta( $user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 ) );
@@ -334,7 +332,10 @@ function wpsol_admin_options()
 		foreach($options as $key => $opt)
 		{
 			// Save the posted value in the database
-			update_option( $key, @$_POST[$key] );
+			if(isset($_POST[$key]))
+			{
+				update_option( $key, $_POST[$key] );
+			}
 		}
 		// Put an settings updated message on the screen
 		echo "<div class=\"updated\"><p><strong>".__('Settings Saved', 'wpsol')."</strong></p></div>";

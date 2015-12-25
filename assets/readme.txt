@@ -88,6 +88,9 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 
 == Changelog ==
 
+= 1.1.5 =
+* some code standarization
+
 = 1.1.4 =
 * checked for compatibility with wordpress 4.4
 
