@@ -3,6 +3,13 @@
 # ToDo - --zip option to make a zip as test-version to send to someone for testing
 # ToDo - add debug options to wpsol, which are removed when uploading to wordpress.org
 
+
+echo "be able to commit a trunk version or a stable tag release to wp.org svn"
+# cp a release to svn/tags/1.1.5 (version) and check readme.txt Stable-tag
+
+exit
+
+
 # options
 wuFORCE=0
 wuDRY=0
