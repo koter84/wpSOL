@@ -239,13 +239,14 @@ then
 	fi
 fi
 
-# ToDo - check changelog for current version
-cv_changelog=`grep '= $cv_wpsol =' assets/readme.txt`
-echo "changelog: $cv_wpsol"
-
-
-
-
+# check changelog for current version
+echo "> check changelog for current version"
+cv_changelog=`grep "= $cv_wpsol =" assets/readme.txt`
+if [ "$cv_changelog" == "" ]
+then
+	echo ">! No Changelog for version $cv_wpsol"
+	exit
+fi
 
 # check for version number increase
 echo "> check for version number increase"
