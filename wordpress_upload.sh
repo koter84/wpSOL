@@ -78,7 +78,7 @@ then
 	if [ ! -f /tmp/i18ntools/makepot.php ]
 	then
 		echo "! i18ntools-checkout failed, stop."
-		rm -r /tmp/i18ntools
+		rm -rf /tmp/i18ntools
 		exit
 	fi
 	# - fix some 'errors' in makepot.php
@@ -320,7 +320,7 @@ svn ci -m "$commit_msg"
 cd $startdir
 
 # remove temporary svn repo
-rm -r /tmp/wpsol_tmp_svn
+rm -rf /tmp/wpsol_tmp_svn
 
 echo "> Done!"
 
