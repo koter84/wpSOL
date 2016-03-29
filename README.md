@@ -5,7 +5,7 @@
 
 **Contributors:** koter84  
 **Requires at least:** 3.6  
-**Tested up to:** 4.4  
+**Tested up to:** 4.5  
 **Stable tag:** 1.1.5  
 **Tags:** scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget  
 **License:** GPLv2 or later  
