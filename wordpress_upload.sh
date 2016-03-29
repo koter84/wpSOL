@@ -3,15 +3,9 @@
 # ToDo - --zip option to make a zip as test-version to send to someone for testing
 # ToDo - add debug options to wpsol, which are removed when uploading to wordpress.org
 
-
-echo "be able to commit a trunk version or a stable tag release to wp.org svn"
-# cp a release to svn/tags/1.1.5 (version) and check readme.txt Stable-tag
-
-exit
-
-
 # options
 wuFORCE=0
+wuRELEASE=0
 wuDRY=0
 wuTEST=0
 
@@ -20,6 +14,9 @@ do
 	case $1 in
 		-f|--force)
 			wuFORCE=1
+		;;
+		-r|--release)
+			wuRELEASE=1
 		;;
 		-d|--dry|--dry-run)
 			wuDRY=1
@@ -32,6 +29,7 @@ do
 			echo "wordpress_upload.sh beta-release :-)"
 			echo ""
 			echo " -f|--force           force upload to wordpress, with pending git changes"
+			echo " -r|--release         upload a new release version to wordpress"
 			echo " -d|--dry|--dry-run   run all checks, but stop before uploading to wordpress"
 			echo " -t|--test            upload files to webserver to test before shipping"
 			echo ""
@@ -46,11 +44,17 @@ do
 done
 
 # confirm that this is a production run
-if [ $wuDRY == 0 ] && [ $wuTEST == 0 ]
+if [ $wuRELEASE == 0 ] && [ $wuDRY == 0 ] && [ $wuTEST == 0 ]
 then
 	read -p "do you want to upload to production ? [y/N] " production_ok
-	if [ "$production_ok" != "y" ] && [ "$production_ok" != "Y" ]
+	if [ "$production_ok" == "y" ] || [ "$production_ok" == "Y" ]
 	then
+		read -p "do you want to release a new version ? [y/N] " release_ok
+		if [ "$release_ok" == "y" ] || [ "$release_ok" == "Y" ]
+		then
+			wuRELEASE=1
+		fi
+	else
 		wuDRY=1
 
 		read -p "do you want to upload to test server ? [y/N] " testupload_ok
@@ -144,8 +148,6 @@ sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/
 sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
 
 sed -i s/"## Description ##"/"${index}\n## Description ##"/ README.md
-sed -i s/"\[NL\]"/"### NL"/ README.md
-sed -i s/"\[EN\]"/"### EN"/ README.md
 imgcache=$(date +%Y%m%d%H)
 sed -i s/".png"/".png?rev=$imgcache"/ README.md
 
@@ -187,7 +189,7 @@ fi
 
 # check that git is clean
 echo "> check that git is clean"
-git_clean=`git clean -n sources/; git status --porcelain sources/`
+git_clean=`git clean -n; git status --porcelain`
 if [ "$git_clean" != "" ]
 then
 	git status
@@ -196,6 +198,13 @@ then
 	if [ $wuFORCE == 1 ]
 	then
 		echo ">> FORCED CONTINUE..."
+	elif [ $wuRELEASE == 0 ]
+	then
+		read -p "continue ? [Y/n] " git_pending_continue
+		if [ "$git_pending_continue" == "n" ] || [ "$git_pending_continue" == "N" ]
+		then
+			exit
+		fi
 	else
 		exit
 	fi
@@ -212,65 +221,71 @@ then
 	exit
 fi
 
-# check version numbers
-echo "> check version numbers"
-# get current version number from wordpress...
-echo "> get current version number from wordpress..."
-cv_plugin=`curl -s http://plugins.svn.wordpress.org/wpsol/trunk/wpsol.php | grep Version | cut -d" " -f2`
-# get version number from local files
-echo "> get version number from local files..."
-cv_wpsol=`grep Version sources/wpsol.php | cut -d" " -f2`
-cv_lang=`grep Project-Id-Version sources/languages/wpsol.pot | cut -d" " -f3 | cut -d"\\\\" -f1`
-cv_langNL=`grep Project-Id-Version sources/languages/wpsol-nl_NL.po | cut -d" " -f3 | cut -d"\\\\" -f1`
-
-# check matching version numbers in local files
-echo "> check matching version numbers in local files"
-if [ "$cv_wpsol" != "$cv_lang" ] || [ "$cv_wpsol" != "$cv_langNL" ]
+if [ $wuRELEASE == 1 ]
 then
-	echo "> php:      $cv_wpsol"
-	echo "> pot:      $cv_lang"
-	echo "> nl_NL.po: $cv_langNL"
-	echo "! Plugin versions do not match..."
-	if [ $wuFORCE == 1 ]
+	# check version numbers
+	echo "> check version numbers"
+	# get current version number from wordpress...
+	echo "> get current version number from wordpress..."
+	cv_plugin=`curl -s http://plugins.svn.wordpress.org/wpsol/trunk/wpsol.php | grep Version | cut -d" " -f2`
+	# get version number from local files
+	echo "> get version number from local files..."
+	cv_wpsol=`grep Version sources/wpsol.php | cut -d" " -f2`
+	cv_stable=`grep 'Stable tag:' assets/readme.txt | cut -d" " -f3`
+	cv_lang=`grep Project-Id-Version sources/languages/wpsol.pot | cut -d" " -f3 | cut -d"\\\\" -f1`
+	cv_langNL=`grep Project-Id-Version sources/languages/wpsol-nl_NL.po | cut -d" " -f3 | cut -d"\\\\" -f1`
+
+	# check matching version numbers in local files
+	echo "> check matching version numbers in local files"
+	if [ "$cv_wpsol" != "$cv_stable" ] || [ "$cv_wpsol" != "$cv_lang" ] || [ "$cv_wpsol" != "$cv_langNL" ]
 	then
-		echo ">> FORCED CONTINUE..."
-	else
+		echo "> php:      $cv_wpsol"
+		echo "> stable:   $cv_stable"
+		echo "> pot:      $cv_lang"
+		echo "> nl_NL.po: $cv_langNL"
+		echo "! Plugin versions do not match..."
+		if [ $wuFORCE == 1 ]
+		then
+			echo ">> FORCED CONTINUE..."
+		else
+			exit
+		fi
+	fi
+
+	# check changelog for current version
+	echo "> check changelog for current version"
+	cv_changelog=`grep "= $cv_wpsol =" assets/readme.txt`
+	if [ "$cv_changelog" == "" ]
+	then
+		echo ">! No Changelog for version $cv_wpsol"
 		exit
 	fi
-fi
 
-# check changelog for current version
-echo "> check changelog for current version"
-cv_changelog=`grep "= $cv_wpsol =" assets/readme.txt`
-if [ "$cv_changelog" == "" ]
-then
-	echo ">! No Changelog for version $cv_wpsol"
-	exit
-fi
-
-# check for version number increase
-echo "> check for version number increase"
-if [ "$cv_plugin" == "$cv_wpsol" ] || [ "$cv_plugin" == "$cv_lang" ] || [ "$cv_plugin" == "$cv_langNL" ]
-then
-	echo "> WP.org:   $cv_plugin"
-	echo "> php:      $cv_wpsol"
-	echo "> pot:      $cv_lang"
-	echo "> nl_NL.po: $cv_langNL"
-	echo "! Plugin version not updated..."
-	if [ $wuFORCE == 1 ]
+	# check for version number increase
+	echo "> check for version number increase"
+	if [ "$cv_plugin" == "$cv_wpsol" ] || [ "$cv_plugin" == "$cv_stable" ] || [ "$cv_plugin" == "$cv_lang" ] || [ "$cv_plugin" == "$cv_langNL" ]
 	then
-		echo ">> FORCED CONTINUE..."
-	else
+		echo "> WP.org:   $cv_plugin"
+		echo "> php:      $cv_wpsol"
+		echo "> stable:   $cv_stable"
+		echo "> pot:      $cv_lang"
+		echo "> nl_NL.po: $cv_langNL"
+		echo "! Plugin version not updated..."
+		if [ $wuFORCE == 1 ]
+		then
+			echo ">> FORCED CONTINUE..."
+		else
+			exit
+		fi
+	fi
+
+	# confirm version number increase
+	read -p "Increase version number from $cv_plugin to $cv_wpsol ? [y/N] " increase_ok
+	if [ "$increase_ok" != "y" ] && [ "$increase_ok" != "Y" ]
+	then
+		echo "stop!"
 		exit
 	fi
-fi
-
-# confirm version number increase
-read -p "Increase version number from $cv_plugin to $cv_wpsol ? [y/N] " increase_ok
-if [ "$increase_ok" != "y" ] && [ "$increase_ok" != "Y" ]
-then
-	echo "stop!"
-	exit
 fi
 
 if [ $wuDRY == 1 ]
@@ -312,8 +327,30 @@ then
 	svn status | grep "^\!" | sed 's/? *//' | xargs -d'\n' svn rm
 fi
 
+# copy the code to a tags/VERSION directory
+if [ $wuRELEASE == 1 ]
+then
+	echo "> make a tags/$cv_wpsol directory on the wp.org SVN-server"
+	cp -r trunk tags/$cv_wpsol
+	svn add tags/$cv_wpsol
+fi
+
 # check-in the changes
-commit_msg="auto-commit [] version: $cv_plugin -> $cv_wpsol"
+if [ $wuRELEASE == 1 ]
+then
+	commit_msg="auto-commit [] stable: $cv_plugin -> $cv_wpsol"
+else
+	read -p "please enter a commit message: " trunk_commit_msg
+	if [ "$trunk_commit_msg" == "" ]
+	then
+		echo "! you need to specify a commit message"
+		# remove temporary svn repo
+		rm -rf /tmp/wpsol_tmp_svn
+		exit
+	fi
+
+	commit_msg="auto-commit [] trunk: $trunk_commit_msg"
+fi
 echo "> commit svn with msg: \"$commit_msg\""
 svn ci -m "$commit_msg"
 
@@ -326,6 +363,9 @@ rm -rf /tmp/wpsol_tmp_svn
 echo "> Done!"
 
 echo "> you should:"
-echo "> git push"
-echo "> git tag $cv_wpsol"
-echo "> git push origin $cv_wpsol"
+if [ $wuRELEASE == 1 ]
+then
+	echo "> git push && git tag $cv_wpsol && git push origin $cv_wpsol"
+else
+	echo "> git push"
+fi

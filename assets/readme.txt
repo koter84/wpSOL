@@ -1,5 +1,5 @@
 === wpSOL ===
-Contributors: koter84, Gerrit Jan Faber
+Contributors: koter84
 Requires at least: 3.6
 Tested up to: 4.4
 Stable tag: 1.1.5
@@ -7,19 +7,9 @@ Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-wi
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Verbind Wordpress met de Scouting Nederland OpenID-server
+Connect Wordpress to the Scouting Nederland OpenID-server
 
 == Description ==
-
-[NL]
-
-wpSOL verbind Wordpress met de Scouting Nederland OpenID-server zodat mensen kunnen inloggen en registreren met hun account van scouting.nl
-
-om de login te valideren maakt deze plugin een https verbinding met login.scouting.nl, dit is onderdeel van de openid-standaard.
-
-bugs en feature-requests kan je kwijt op: [GitHub](https://github.com/koter84/wpSOL/issues) of [WordPress](https://wordpress.org/support/plugin/wpsol)
-
-[EN]
 
 wpSOL connects WordPress to the Scouting Nederland OpenID-server to allow people to login and register with their login-account from scouting.nl
 
@@ -29,7 +19,7 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 
 == Screenshots ==
 
-1. wp-login.php met scouting-login
+1. wp-login.php with scouting-login
 2. sidebar-widget in theme twenty-fifteen
 3. sidebar-widget in theme twenty-fourteen
 4. sidebar-widget in theme twenty-thirteen
@@ -38,39 +28,12 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 
 == Installation ==
 
-[NL]
-
-1. login op sol.scouting.nl en verander je rol naar "webmaster".
-1. ga nu naar login.scouting.nl en beweeg je muis over "mijn websites" en klik op "voeg beheerde website toe".
-1. voer het domein van je wordpress-website in en selecteer de organisatie die je toegang wilt geven.
-1. installeer en activeer de plugin, klaar.
-
-[EN]
-
 1. login to sol.scouting.nl and change your role to "webmaster". 
 1. go to login.scouting.nl move your mouse over "mijn websites" and click on "voeg beheerde website toe".
 1. enter the domain which is setup for wordpress and select the organization you want to give access.
 1. install and activate the plugin, that's it.
 
 == Frequently Asked Questions ==
-
-[NL]
-
-= Het werkt niet! =
-
-Waarschijnlijk moet je het domein van je website toevoegen op login.scouting.nl, dit kan alleen als je ingelogd bent als webmaster.
-Kijk bij de [installatie-tab](https://wordpress.org/plugins/wpsol/installation/) voor een volledige uitleg.
-
-= Moet ik onderdeel uitmaken van Scouting Nederland om hier gebruik van te maken? =
-
-Ja, de OpenID-server wordt gebruikt om te bepalen of iemand onderdeel uitmaakt van Scouting Nederland, en of ze lid zijn van de juiste organisatie.
-Om de plugin in te stellen bij Scouting Nederland moet je het webmaster-privilege hebben voor jouw scouting-groep.
-
-= Kan ik binnen de plugin nog dingen instellen? =
-
-Ja, er is een instellingen-pagina waar je de redirect na in- of uitloggen kan aanpassen en de naam van de gebruiker binnen wordpress kan forceren.
-
-[EN]
 
 = It's not working! =
 
@@ -147,11 +110,11 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 == Upgrade Notice ==
 
 = 1.1.0 =
-Let op! De login-widget is herschreven zodat de opbouw hetzelfde is als standaard widgets.
-Hierdoor moet je de widget opnieuw plaatsen op je site, en eventuele custom css hiervoor werkt niet meer correct!
-Houd er dus rekening mee dat na deze update je je custom-thema moet bijwerken.
+Beware! The login-widget has been re-written to have the same code-output as standard widgets.
+Because of this you need to re-place the widget on your site, if you made custom CSS rules for this they won't work anymore!
+Keep in mind that after this update you need to update your custom-theme.
 
 == Translations ==
 
-* Nederlands
+* Dutch
 * English
