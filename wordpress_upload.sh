@@ -143,9 +143,10 @@ do
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/wpsol_readme
 
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Plugin](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
 
 sed -i s/"## Description ##"/"${index}\n## Description ##"/ README.md
 imgcache=$(date +%Y%m%d%H)
@@ -200,6 +201,7 @@ then
 		echo ">> FORCED CONTINUE..."
 	elif [ $wuRELEASE == 0 ]
 	then
+		# ToDo - continue when in a dry-run without question..
 		read -p "continue ? [Y/n] " git_pending_continue
 		if [ "$git_pending_continue" == "n" ] || [ "$git_pending_continue" == "N" ]
 		then

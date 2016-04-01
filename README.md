@@ -1,7 +1,8 @@
 # wpSOL #
-[![Wordpress-Plugin](https://img.shields.io/wordpress/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
-[![Wordpress-Plugin](https://img.shields.io/wordpress/plugin/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
-[![Wordpress-Plugin](https://img.shields.io/wordpress/plugin/dt/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Supported](https://img.shields.io/wordpress/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Version](https://img.shields.io/wordpress/plugin/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Downloads](https://img.shields.io/wordpress/plugin/dt/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Active-Installs](https://img.shields.io/wordpress/plugin/ai/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
 
 **Contributors:** koter84  
 **Requires at least:** 3.6  
