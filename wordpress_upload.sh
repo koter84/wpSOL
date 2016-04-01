@@ -199,9 +199,11 @@ then
 	if [ $wuFORCE == 1 ]
 	then
 		echo ">> FORCED CONTINUE..."
-	elif [ $wuRELEASE == 0 ]
+	elif [ $wuDRY == 1 ] && [ $wuTEST == 0 ]
 	then
-		# ToDo - continue when in a dry-run without question..
+		echo ">> just a dry-run, continue..."
+	elif [ $wuRELEASE == 0 ] && [ $wuDRY == 0 ]
+	then
 		read -p "continue ? [Y/n] " git_pending_continue
 		if [ "$git_pending_continue" == "n" ] || [ "$git_pending_continue" == "N" ]
 		then
