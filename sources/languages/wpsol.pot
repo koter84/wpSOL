@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the wpSOL package.
 msgid ""
 msgstr ""
-"Project-Id-Version: wpSOL 1.1.7\n"
+"Project-Id-Version: wpSOL 1.1.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpsol\n"
 "POT-Creation-Date: 2016-04-14 00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
@@ -36,111 +36,111 @@ msgstr ""
 msgid "Show links when logged in: "
 msgstr ""
 
-#: common.php:161
+#: common.php:162
 msgid ""
 "New user registrations through login.scouting.nl have been disabled for this "
 "site, please contact the site administrator if you feel this is incorrect"
 msgstr ""
 
-#: common.php:161 common.php:185 common.php:226
+#: common.php:162 common.php:186 common.php:227
 msgid "wpSOL Setup Instructions"
 msgstr ""
 
-#: common.php:185
+#: common.php:186
 msgid ""
 "wp-user-id based on username (%s) does not match wp-user-id based on email "
 "(%s)"
 msgstr ""
 
-#: common.php:226
+#: common.php:227
 msgid ""
 "The login was cancelled, either the user cancelled the request, or login."
 "scouting.nl isn't aware of your domain (%s)"
 msgstr ""
 
-#: common.php:231
+#: common.php:232
 msgid "The login failed with openid-mode: \"%s\""
 msgstr ""
 
-#: common.php:231
+#: common.php:232
 msgid "wpSOL Support"
 msgstr ""
 
-#: common.php:279
+#: common.php:280
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: common.php:285
+#: common.php:286
 msgid "Set display_name to: "
 msgstr ""
 
-#: common.php:288
+#: common.php:289
 msgid "Full name"
 msgstr ""
 
-#: common.php:289
+#: common.php:290
 msgid "First name"
 msgstr ""
 
-#: common.php:290
+#: common.php:291
 msgid "Last name"
 msgstr ""
 
-#: common.php:291
+#: common.php:292
 msgid "Username"
 msgstr ""
 
-#: common.php:295
+#: common.php:296
 msgid "Force display_name on each login: "
 msgstr ""
 
-#: common.php:299
+#: common.php:300
 msgid "Force first and last name on each login: "
 msgstr ""
 
-#: common.php:303
+#: common.php:304
 msgid "Automatically create new users: "
 msgstr ""
 
-#: common.php:307
+#: common.php:308
 msgid "Prefix for all Scouting Nederland users: "
 msgstr ""
 
-#: common.php:309
+#: common.php:310
 msgid ""
 "By giving a prefix like sn_ you can easily identify which accounts are from "
 "Scouting Nederland"
 msgstr ""
 
-#: common.php:312
+#: common.php:313
 msgid "After a successful login redirect user to: "
 msgstr ""
 
-#: common.php:315 common.php:324
+#: common.php:316 common.php:325
 msgid "Default (no action)"
 msgstr ""
 
-#: common.php:316 common.php:325
+#: common.php:317 common.php:326
 msgid "Frontpage"
 msgstr ""
 
-#: common.php:317
+#: common.php:318
 msgid "Dashboard"
 msgstr ""
 
-#: common.php:321
+#: common.php:322
 msgid "After logout redirect user to: "
 msgstr ""
 
-#: common.php:347
+#: common.php:348
 msgid "Settings Saved"
 msgstr ""
 
-#: common.php:354
+#: common.php:355
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr ""
 
-#: common.php:401
+#: common.php:402
 msgid "Save Changes"
 msgstr ""
 

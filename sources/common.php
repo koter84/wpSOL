@@ -149,11 +149,12 @@ function wpsol_authenticate_username_password()
 
 			if( !$user_id && !$email_id )
 			{ // geen user_id, geen email_id, create new user.
-				if( get_option('wpsol_autocreate') === true )
+				if( get_option('wpsol_autocreate') )
 				{
 					$random_password = wp_generate_password( 18, false );
 					$user_id = wp_create_user( $username, $random_password, $email );
 					$new_user = true;
+					$user = get_user_by( 'email', $email );
 				}
 				else
 				{
