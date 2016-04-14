@@ -336,6 +336,10 @@ function wpsol_admin_options()
 			{
 				update_option( $key, $_POST[$key] );
 			}
+			elseif($opt['type'] == "checkbox")
+			{
+				update_option( $key, 0 );
+			}
 		}
 		// Put an settings updated message on the screen
 		echo "<div class=\"updated\"><p><strong>".__('Settings Saved', 'wpsol')."</strong></p></div>";
