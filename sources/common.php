@@ -157,6 +157,8 @@ function wpsol_authenticate_username_password()
 				}
 				else
 				{
+					global $error;
+					$error = __('New user registrations through login.scouting.nl have been disabled for this site, please contact the site administrator if you feel this is incorrect', 'wpsol').'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
 					return false;
 				}
 			}
@@ -181,7 +183,7 @@ function wpsol_authenticate_username_password()
 				//  - ???
 				global $error;
 				$error = sprintf(__('wp-user-id based on username (%s) does not match wp-user-id based on email (%s)', 'wpsol'), $username, $email).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
-				break;
+				return false;
 			}
 
 			if( $new_user || get_option('wpsol_force_display_name') )
