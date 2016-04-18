@@ -35,22 +35,22 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ## Screenshots ##
 
 ###1. wp-login.php with scouting-login###
-![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2016041413)
+![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=2016041812)
 
 ###2. sidebar-widget in theme twenty-fifteen###
-![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2016041413)
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=2016041812)
 
 ###3. sidebar-widget in theme twenty-fourteen###
-![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2016041413)
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=2016041812)
 
 ###4. sidebar-widget in theme twenty-thirteen###
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2016041413)
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=2016041812)
 
 ###5. sidebar-widget in theme twenty-twelve###
-![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2016041413)
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=2016041812)
 
 ###6. sidebar-widget in custom theme###
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2016041413)
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=2016041812)
 
 
 ## Installation ##
@@ -77,6 +77,9 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup a redirect after login or logout and setup the Name the user gets in their profile and enforce that.
 
 ## Changelog ##
+
+### 1.x.x ###
+* plugin authors changed to only include Dennis
 
 ### 1.1.8 ###
 * fix automatically creating users

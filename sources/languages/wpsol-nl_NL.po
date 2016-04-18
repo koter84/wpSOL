@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpSOL 1.1.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpsol\n"
-"POT-Creation-Date: 2016-04-14 00:00:00+00:00\n"
+"POT-Creation-Date: 2016-04-18 00:00:00+00:00\n"
 "PO-Revision-Date: 2014-01-07 16:14+0200\n"
 "Last-Translator: Dennis Koot <koter84@gmail.com>\n"
 "Language-Team: Dennis Koot <koter84@gmail.com>\n"
@@ -167,8 +167,8 @@ msgid "Connect WordPress to the Scouting Nederland OpenID Server"
 msgstr "Gebruik de Scouting Nederland OpenID Server met WordPress"
 
 #. Author of the plugin/theme
-msgid "Gerrit Jan and Dennis"
-msgstr "Gerrit Jan en Dennis"
+msgid "Dennis Koot"
+msgstr "Dennis Koot"
 
 #. Author URI of the plugin/theme
 msgid "http://wordpress.org/plugins/wpsol/"

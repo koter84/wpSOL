@@ -51,6 +51,9 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 
 == Changelog ==
 
+= 1.x.x =
+* plugin authors changed to only include Dennis
+
 = 1.1.8 =
 * fix automatically creating users
 
