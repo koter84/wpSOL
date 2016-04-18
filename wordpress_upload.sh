@@ -149,7 +149,7 @@ sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Version](https:\/\/img.shields.io\
 sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
 
 sed -i s/"## Description ##"/"${index}\n## Description ##"/ README.md
-imgcache=$(date +%Y%m%d%H)
+imgcache=$(date +%Y%m%d)
 sed -i s/".png"/".png?rev=$imgcache"/ README.md
 
 if [ $wuTEST == 1 ]
