@@ -272,6 +272,12 @@ function wpsol_logout_redirect()
 	}
 }
 
+// Geef extra links op de plugin-overzichtspagina
+function wpsol_plugin_action_links( $links ) {
+	array_unshift($links, '<a href="'.esc_url(get_admin_url(null, 'options-general.php?page=wpsol_settings')).'">'.__('Settings', 'wpsol').'</a>');
+	return $links;
+}
+
 // Admin Settings Pagina
 function wpsol_admin_options()
 {

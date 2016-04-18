@@ -80,6 +80,7 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 
 ### 1.x.x ###
 * plugin authors changed to only include Dennis
+* add settings link in plugins overview page
 
 ### 1.1.8 ###
 * fix automatically creating users

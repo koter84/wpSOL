@@ -66,81 +66,85 @@ msgstr ""
 msgid "wpSOL Support"
 msgstr ""
 
-#: common.php:280
-msgid "You do not have sufficient permissions to access this page."
+#: common.php:277
+msgid "Settings"
 msgstr ""
 
 #: common.php:286
-msgid "Set display_name to: "
-msgstr ""
-
-#: common.php:289
-msgid "Full name"
-msgstr ""
-
-#: common.php:290
-msgid "First name"
-msgstr ""
-
-#: common.php:291
-msgid "Last name"
+msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
 #: common.php:292
-msgid "Username"
+msgid "Set display_name to: "
+msgstr ""
+
+#: common.php:295
+msgid "Full name"
 msgstr ""
 
 #: common.php:296
+msgid "First name"
+msgstr ""
+
+#: common.php:297
+msgid "Last name"
+msgstr ""
+
+#: common.php:298
+msgid "Username"
+msgstr ""
+
+#: common.php:302
 msgid "Force display_name on each login: "
 msgstr ""
 
-#: common.php:300
+#: common.php:306
 msgid "Force first and last name on each login: "
 msgstr ""
 
-#: common.php:304
+#: common.php:310
 msgid "Automatically create new users: "
 msgstr ""
 
-#: common.php:308
+#: common.php:314
 msgid "Prefix for all Scouting Nederland users: "
 msgstr ""
 
-#: common.php:310
+#: common.php:316
 msgid ""
 "By giving a prefix like sn_ you can easily identify which accounts are from "
 "Scouting Nederland"
 msgstr ""
 
-#: common.php:313
+#: common.php:319
 msgid "After a successful login redirect user to: "
 msgstr ""
 
-#: common.php:316 common.php:325
+#: common.php:322 common.php:331
 msgid "Default (no action)"
 msgstr ""
 
-#: common.php:317 common.php:326
+#: common.php:323 common.php:332
 msgid "Frontpage"
 msgstr ""
 
-#: common.php:318
+#: common.php:324
 msgid "Dashboard"
 msgstr ""
 
-#: common.php:322
+#: common.php:328
 msgid "After logout redirect user to: "
 msgstr ""
 
-#: common.php:348
+#: common.php:354
 msgid "Settings Saved"
 msgstr ""
 
-#: common.php:355
+#: common.php:361
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr ""
 
-#: common.php:402
+#: common.php:408
 msgid "Save Changes"
 msgstr ""
 

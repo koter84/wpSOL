@@ -74,47 +74,51 @@ msgstr "Het inloggen is mislukt met openid-mode: \"%s\""
 msgid "wpSOL Support"
 msgstr "wpSOL Support"
 
-#: common.php:280
+#: common.php:277
+msgid "Settings"
+msgstr "Instellingen"
+
+#: common.php:286
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Je hebt onvoldoende rechten voor het bekijken van deze pagina."
 
-#: common.php:286
+#: common.php:292
 msgid "Set display_name to: "
 msgstr "Stel display_name in op: "
 
-#: common.php:289
+#: common.php:295
 msgid "Full name"
 msgstr "Volledige naam"
 
-#: common.php:290
+#: common.php:296
 msgid "First name"
 msgstr "Voornaam"
 
-#: common.php:291
+#: common.php:297
 msgid "Last name"
 msgstr "Achternaam"
 
-#: common.php:292
+#: common.php:298
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: common.php:296
+#: common.php:302
 msgid "Force display_name on each login: "
 msgstr "Forceer display_name bij elke login: "
 
-#: common.php:300
+#: common.php:306
 msgid "Force first and last name on each login: "
 msgstr "Forceer voornaam en achternaam bij elke login: "
 
-#: common.php:304
+#: common.php:310
 msgid "Automatically create new users: "
 msgstr "Automatisch nieuwe gebruikers aanmaken: "
 
-#: common.php:308
+#: common.php:314
 msgid "Prefix for all Scouting Nederland users: "
 msgstr "Voorvoegsel voor alle Scouting Nederland users: "
 
-#: common.php:310
+#: common.php:316
 msgid ""
 "By giving a prefix like sn_ you can easily identify which accounts are from "
 "Scouting Nederland"
@@ -122,35 +126,35 @@ msgstr ""
 "Door een voorvoegsel in te stellen zoals sn_ kan je accounts van Scouting "
 "Nederland makkelijk terugvinden"
 
-#: common.php:313
+#: common.php:319
 msgid "After a successful login redirect user to: "
 msgstr "Na een succesvolle login redirect naar: "
 
-#: common.php:316 common.php:325
+#: common.php:322 common.php:331
 msgid "Default (no action)"
 msgstr "Standaard (geen actie)"
 
-#: common.php:317 common.php:326
+#: common.php:323 common.php:332
 msgid "Frontpage"
 msgstr "Frontpage"
 
-#: common.php:318
+#: common.php:324
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: common.php:322
+#: common.php:328
 msgid "After logout redirect user to: "
 msgstr "Na uitloggen redirect naar: "
 
-#: common.php:348
+#: common.php:354
 msgid "Settings Saved"
 msgstr "Instellingen Opgeslagen"
 
-#: common.php:355
+#: common.php:361
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr "wpSOL [ScoutsOnLine] Instellingen"
 
-#: common.php:402
+#: common.php:408
 msgid "Save Changes"
 msgstr "Wijzigingen Opslaan"
 
