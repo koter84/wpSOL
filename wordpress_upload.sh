@@ -5,6 +5,7 @@
 
 # options
 wuFORCE=0
+wuUPLOAD=0
 wuRELEASE=0
 wuDRY=0
 wuTEST=0
@@ -14,6 +15,9 @@ do
 	case $1 in
 		-f|--force)
 			wuFORCE=1
+		;;
+		-u|--upload)
+			wuUPLOAD=1
 		;;
 		-r|--release)
 			wuRELEASE=1
@@ -29,9 +33,10 @@ do
 			echo "wordpress_upload.sh beta-release :-)"
 			echo ""
 			echo " -f|--force           force upload to wordpress, with pending git changes"
-			echo " -r|--release         upload a new release version to wordpress"
-			echo " -d|--dry|--dry-run   run all checks, but stop before uploading to wordpress"
-			echo " -t|--test            upload files to webserver to test before shipping"
+			echo " -u|--upload          upload the code to wordpress.org trunk"
+			echo " -r|--release         upload a new release version to wordpress.org"
+			echo " -d|--dry|--dry-run   run all checks, but stop before uploading to wordpress.org"
+			echo " -t|--test            upload files to test-server"
 			echo ""
 			exit
 		;;
@@ -44,11 +49,12 @@ do
 done
 
 # confirm that this is a production run
-if [ $wuRELEASE == 0 ] && [ $wuDRY == 0 ] && [ $wuTEST == 0 ]
+if [ $wuUPLOAD == 0 ] && [ $wuRELEASE == 0 ] && [ $wuDRY == 0 ] && [ $wuTEST == 0 ]
 then
-	read -p "do you want to upload to production ? [y/N] " production_ok
+	read -p "do you want to upload to wordpress.org ? [y/N] " production_ok
 	if [ "$production_ok" == "y" ] || [ "$production_ok" == "Y" ]
 	then
+		wuUPLOAD=1
 		read -p "do you want to release a new version ? [y/N] " release_ok
 		if [ "$release_ok" == "y" ] || [ "$release_ok" == "Y" ]
 		then
