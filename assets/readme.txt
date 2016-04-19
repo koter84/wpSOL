@@ -2,7 +2,7 @@
 Contributors: koter84
 Requires at least: 3.6
 Tested up to: 4.5
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,7 +51,7 @@ Yes, there is a settings-page where you can setup a redirect after login or logo
 
 == Changelog ==
 
-= 1.x.x =
+= 1.1.9 =
 * plugin authors changed to only include Dennis
 * add settings link in plugins overview page
 
