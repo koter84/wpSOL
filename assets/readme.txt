@@ -2,7 +2,7 @@
 Contributors: koter84
 Requires at least: 3.6
 Tested up to: 4.5
-Stable tag: 1.1.10
+Stable tag: 1.1.11
 Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,9 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup a redirect after login or logout and setup the Name the user gets in their profile and enforce that.
 
 == Changelog ==
+
+= 1.1.11 =
+* old-style array() instead of []
 
 = 1.1.10 =
 * fixed most ToDo's in code
