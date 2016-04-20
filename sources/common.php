@@ -171,7 +171,7 @@ function wpsol_authenticate_username_password()
 			{ // geen email_id, wel user_id, login
 				$user = get_user_by( 'id', $user_id );
 				// update email voor de user, aangezien die blijkbaar veranderd is
-				wp_update_user( ['ID' => $user_id, 'user_email' => $email] );
+				wp_update_user( array('ID' => $user_id, 'user_email' => $email) );
 			}
 			elseif( $user_id == $email_id )
 			{ // login.
