@@ -5,7 +5,7 @@ Plugin URI: https://github.com/koter84/wpSOL
 Description: Connect WordPress to the Scouting Nederland OpenID Server
 Author: Dennis Koot
 Author URI: http://wordpress.org/plugins/wpsol/
-Version: 1.1.9
+Version: 1.1.10
 License: GPLv2 or later
 Text Domain: wpSOL
 */
