@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# ToDo - --zip option to make a zip as test-version to send to someone for testing
 # ToDo - add debug options to wpsol, which are removed when uploading to wordpress.org
 
 # options
@@ -9,6 +8,7 @@ wuUPLOAD=0
 wuRELEASE=0
 wuDRY=0
 wuTEST=0
+wuZIP=0
 
 while [[ $# -ge 1 ]]
 do
@@ -28,6 +28,9 @@ do
 		-t|--test)
 			wuTEST=1
 		;;
+		-z|--zip)
+			wuZIP=1
+		;;
 		-h|--help)
 			echo ""
 			echo "wordpress_upload.sh beta-release :-)"
@@ -37,6 +40,7 @@ do
 			echo " -r|--release         upload a new release version to wordpress.org"
 			echo " -d|--dry|--dry-run   run all checks, but stop before uploading to wordpress.org"
 			echo " -t|--test            upload files to test-server"
+			echo " -z|--zip             make a zip-file to install in a wordpress for testing"
 			echo ""
 			exit
 		;;
@@ -47,6 +51,38 @@ do
 	esac
 	shift
 done
+
+# make a zip file
+if [ $wuZIP == 1 ]
+then
+	# make a temp dir
+	wpsol_zip_dir=$(mktemp -dt wpsol-zip-XXXXXX)
+
+	# copy files to temp dir
+	mkdir "$wpsol_zip_dir/wpsol"
+	cp ./assets/readme.txt "$wpsol_zip_dir/wpsol"
+	cp ./sources/common.php "$wpsol_zip_dir/wpsol"
+	cp ./sources/openid.php "$wpsol_zip_dir/wpsol"
+	cp ./sources/scnllogo.png "$wpsol_zip_dir/wpsol"
+	cp ./sources/wpsol.php "$wpsol_zip_dir/wpsol"
+	mkdir "$wpsol_zip_dir/wpsol/languages"
+	cp ./sources/languages/wpsol.pot "$wpsol_zip_dir/wpsol/languages"
+	cp ./sources/languages/wpsol-nl_NL.mo "$wpsol_zip_dir/wpsol/languages"
+	cp ./sources/languages/wpsol-nl_NL.po "$wpsol_zip_dir/wpsol/languages"
+
+	# generate zip filename
+	wpsol_zip_name="/tmp/wpsol-test.zip"
+
+	# zip temp dir
+	cd "$wpsol_zip_dir"
+	zip -rq "$wpsol_zip_name" ./wpsol
+
+	# remove temp dir
+	rm -r "$wpsol_zip_dir"
+
+	echo "zip test-file: $wpsol_zip_name"
+	exit
+fi
 
 # confirm that this is a production run
 if [ $wuUPLOAD == 0 ] && [ $wuRELEASE == 0 ] && [ $wuDRY == 0 ] && [ $wuTEST == 0 ]
