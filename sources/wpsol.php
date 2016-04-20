@@ -10,8 +10,8 @@ License: GPLv2 or later
 Text Domain: wpSOL
 */
 
-require 'openid.php';
-require 'common.php';
+include_once 'openid.php';
+include_once 'common.php';
 
 // Init wpsol-plugin
 function wpsol_init()
