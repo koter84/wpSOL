@@ -75,7 +75,6 @@ function wpsol_sidebar_login()
 	else
 	{
 		// haal het "normale" login formulier op
-		// ToDo - misschien beter een nieuw formulier opbouwen?
 		$result = wp_login_form(array('echo'=>false, 'remember'=>false));
 
 		// verwijder username-input
@@ -165,25 +164,29 @@ function wpsol_authenticate_username_password()
 			}
 			elseif( !$user_id )
 			{ // geen user_id, wel email_id, login
+				// gebruiker bestaat maar met een andere username dan bij SOL, bijvoorbeeld de site beheerder o.i.d.
 				$user = get_user_by( 'id', $email_id );
 			}
 			elseif( !$email_id )
 			{ // geen email_id, wel user_id, login
 				$user = get_user_by( 'id', $user_id );
-				// ToDo - update email for user ?
+				// update email voor de user, aangezien die blijkbaar veranderd is
+				wp_update_user( ['ID' => $user_id, 'user_email' => $email] );
 			}
 			elseif( $user_id == $email_id )
 			{ // login.
 				$user = get_user_by( 'id', $user_id );
 			}
-			else
-			{ // uhm.
-				// ToDo - notificatie naar site-admin o.i.d.
-				// mogelijke fouten:
-				//  - user_id != email_id ( wat te doen )
-				//  - ???
+			elseif( $user_id != $email_id )
+			{ // user_id en email_id komen niet overeen
 				global $error;
 				$error = sprintf(__('wp-user-id based on username (%s) does not match wp-user-id based on email (%s)', 'wpsol'), $username, $email).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
+				return false;
+			}
+			else
+			{ // uhm, geen idee wat er fout gaat...
+				global $error;
+				$error = sprintf(__('Error 14: Something went wrong, please notify the site administrator [%s|%s|%s|%s]', 'wpsol'), $username, $email, $user_id, $email_id).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
 				return false;
 			}
 

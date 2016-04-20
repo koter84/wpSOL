@@ -157,7 +157,6 @@ do
 		then
 			echo ">> FORCED CONTINUE..."
 		else
-			# ToDo - check all languages before exit
 			exit
 		fi
 	fi
