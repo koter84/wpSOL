@@ -141,14 +141,14 @@ project_id_version=$(grep 'Project-Id-Version' sources/languages/wpsol.pot|cut -
 
 # set languages
 languages=('nl_NL')
-for lang in ${languages[@]}
+for lang in "${languages[@]}"
 do
 	# update .po file from .pot
 	echo "> update $lang.po file from .pot"
-	msgmerge --update sources/languages/wpsol-$lang.po sources/languages/wpsol.pot
+	msgmerge --update "sources/languages/wpsol-$lang.po" sources/languages/wpsol.pot
 	# compare .pot to .po (fail when incomplete)
 	echo "> compare .pot to $lang.po"
-	lang_compare=`msgcmp sources/languages/wpsol-$lang.po sources/languages/wpsol.pot 2>&1`
+	lang_compare=$(msgcmp "sources/languages/wpsol-$lang.po" sources/languages/wpsol.pot 2>&1)
 	if [ "$lang_compare" != "" ]
 	then
 		echo "! incomplete translation $lang"
@@ -164,7 +164,7 @@ do
 	sed -i s/'.*Project-Id-Version.*'/"\"$project_id_version\\\n\""/ sources/languages/wpsol-nl_NL.po
 	# make .mo file
 	echo "> make $lang.mo file"
-	lang_make=`msgfmt -o sources/languages/wpsol-$lang.mo -v sources/languages/wpsol-$lang.po 2>&1`
+	lang_make=$(msgfmt -o "sources/languages/wpsol-$lang.mo" -v "sources/languages/wpsol-$lang.po" 2>&1)
 	echo "> update $lang: $lang_make"
 done
 
@@ -177,21 +177,21 @@ then
 fi
 /tmp/wp2md convert < assets/readme.txt > README.md
 index="## Index ##\n\n"
-grep '^## ' README.md | sed s/"## "/""/ | sed s/" ##"/""/ | sed s/" "/"-"/g > /tmp/wpsol_readme
+grep '^## ' README.md | sed s/"## "// | sed s/" ##"// | sed s/" "/-/g > /tmp/wpsol_readme
 while read line
 do
-	line_lower=`echo "$line" | tr [:upper:] [:lower:]`
+	line_lower=$(echo "$line" | tr '[:upper:]' '[:lower:]')
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/wpsol_readme
 
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/"# wpSOL #"/"# wpSOL #\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
+sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
 
-sed -i s/"## Description ##"/"${index}\n## Description ##"/ README.md
+sed -i s/'## Description ##'/"${index}\n## Description ##"/ README.md
 imgcache=$(date +%Y%m%d)
-sed -i s/".png"/".png?rev=$imgcache"/ README.md
+sed -i s/'.png'/".png?rev=$imgcache"/ README.md
 
 if [ $wuTEST == 1 ]
 then
@@ -201,20 +201,26 @@ then
 		echo "! wptest_user=\"user\""
 		echo "! wptest_host=\"example.org\""
 		echo "! wptest_dir=\"/var/www/wordpress\""
-		echo "! wptest_chown_user=\"www\""
-		echo "! wptest_chown_group=\"www\""
+		echo "! wptest_chown_user=\"user\""
+		echo "! wptest_chown_group=\"user\""
 		echo "! no wordpress_upload.conf found"
 		exit
 	else
+		wptest_user=""
+		wptest_host=""
+		wptest_dir=""
+		wptest_chown_user=""
+		wptest_chown_group=""
+
 		. ./wordpress_upload.conf
 		if [ "$wptest_user" == "" ] || [ "$wptest_host" == "" ] || [ "$wptest_dir" == "" ] || [ "$wptest_chown_user" == "" ] || [ "$wptest_chown_group" == "" ]
 		then
-			echo "! wptest_user=\"www\" [$wptest_user]"
-			echo "! wptest_host=\"example.org\" [$wptest_host]"
-			echo "! wptest_dir=\"/var/www/wordpress\" [$wptest_dir]"
-			echo "! wptest_chown_user=\"www\" [$wptest_chown_user]"
-			echo "! wptest_chown_group=\"www\" [$wptest_chown_group]"
-			echo "! wordpress_upload.conf does not contain neccesary config options"
+			echo "! wptest_user=\"$wptest_user\""
+			echo "! wptest_host=\"$wptest_host\""
+			echo "! wptest_dir=\"$wptest_dir\""
+			echo "! wptest_chown_user=\"$wptest_chown_user\""
+			echo "! wptest_chown_group=\"$wptest_chown_group\""
+			echo "! wordpress_upload.conf does not contain neccesary config options, or some options are empty"
 			exit
 		fi
 	fi
@@ -231,7 +237,7 @@ fi
 
 # check that git is clean
 echo "> check that git is clean"
-git_clean=`git clean -n; git status --porcelain`
+git_clean=$(git clean -n; git status --porcelain)
 if [ "$git_clean" != "" ]
 then
 	git status
@@ -257,7 +263,7 @@ fi
 
 # check that git is on branch master
 echo "> check that git is on branch master"
-git_branch=`git rev-parse --abbrev-ref HEAD`
+git_branch=$(git rev-parse --abbrev-ref HEAD)
 if [ "$git_branch" != "master" ]
 then
 	git status
@@ -272,13 +278,13 @@ then
 	echo "> check version numbers"
 	# get current version number from wordpress...
 	echo "> get current version number from wordpress..."
-	cv_plugin=`curl -s http://plugins.svn.wordpress.org/wpsol/trunk/wpsol.php | grep Version | cut -d" " -f2`
+	cv_plugin=$(curl -s http://plugins.svn.wordpress.org/wpsol/trunk/wpsol.php | grep Version | cut -d" " -f2)
 	# get version number from local files
 	echo "> get version number from local files..."
-	cv_wpsol=`grep Version sources/wpsol.php | cut -d" " -f2`
-	cv_stable=`grep 'Stable tag:' assets/readme.txt | cut -d" " -f3`
-	cv_lang=`grep Project-Id-Version sources/languages/wpsol.pot | cut -d" " -f3 | cut -d"\\\\" -f1`
-	cv_langNL=`grep Project-Id-Version sources/languages/wpsol-nl_NL.po | cut -d" " -f3 | cut -d"\\\\" -f1`
+	cv_wpsol=$(grep Version sources/wpsol.php | cut -d" " -f2)
+	cv_stable=$(grep 'Stable tag:' assets/readme.txt | cut -d" " -f3)
+	cv_lang=$(grep Project-Id-Version sources/languages/wpsol.pot | cut -d" " -f3 | cut -d"\\\\" -f1)
+	cv_langNL=$(grep Project-Id-Version sources/languages/wpsol-nl_NL.po | cut -d" " -f3 | cut -d"\\\\" -f1)
 
 	# check matching version numbers in local files
 	echo "> check matching version numbers in local files"
@@ -299,7 +305,7 @@ then
 
 	# check changelog for current version
 	echo "> check changelog for current version"
-	cv_changelog=`grep "= $cv_wpsol =" assets/readme.txt`
+	cv_changelog=$(grep "= $cv_wpsol =" assets/readme.txt)
 	if [ "$cv_changelog" == "" ]
 	then
 		echo ">! No Changelog for version $cv_wpsol"
@@ -357,16 +363,16 @@ cp assets/readme.txt /tmp/wpsol_tmp_svn/trunk/readme.txt
 cp assets/screenshot* /tmp/wpsol_tmp_svn/assets/
 
 # changedir, remember current dir
-startdir=`pwd`
+startdir=$(pwd)
 cd /tmp/wpsol_tmp_svn
 
 # add new and delete removed files from subversion
-files_to_add=`svn status | grep "^\?"`
+files_to_add=$(svn status | grep "^\?")
 if [ "$files_to_add" != "" ]
 then
 	svn status | grep "^\?" | sed 's/? *//' | xargs -d'\n' svn add
 fi
-files_to_rm=`svn status | grep "^\!"`
+files_to_rm=$(svn status | grep "^\!")
 if [ "$files_to_rm" != "" ]
 then
 	svn status | grep "^\!" | sed 's/? *//' | xargs -d'\n' svn rm
@@ -376,8 +382,8 @@ fi
 if [ $wuRELEASE == 1 ]
 then
 	echo "> make a tags/$cv_wpsol directory on the wp.org SVN-server"
-	cp -r trunk tags/$cv_wpsol
-	svn add tags/$cv_wpsol
+	cp -r trunk "tags/$cv_wpsol"
+	svn add "tags/$cv_wpsol"
 fi
 
 # check-in the changes
@@ -400,7 +406,7 @@ echo "> commit svn with msg: \"$commit_msg\""
 svn ci -m "$commit_msg"
 
 # go back to start dir
-cd $startdir
+cd "$startdir"
 
 # remove temporary svn repo
 rm -rf /tmp/wpsol_tmp_svn
