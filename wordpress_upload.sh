@@ -366,6 +366,9 @@ cp assets/screenshot* /tmp/wpsol_tmp_svn/assets/
 # cp icons to svn assets
 cp assets/icon* /tmp/wpsol_tmp_svn/assets/
 
+# cp banners to svn assets
+cp assets/banner* /tmp/wpsol_tmp_svn/assets/
+
 # changedir, remember current dir
 startdir=$(pwd)
 cd /tmp/wpsol_tmp_svn
