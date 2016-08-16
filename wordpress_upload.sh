@@ -172,24 +172,25 @@ done
 echo "> convert wordpress-readme to github-readme"
 if [ ! -f /tmp/wp2md ]
 then
-	wget -q --show-progress http://code.sunchaser.info/wp2md/downloads/wp2md.phar -O /tmp/wp2md
+	filelink=$(wget -O - -q https://github.com/wpreadme2markdown/wp-readme-to-markdown/releases/latest | sed s/'<a '/'\n<a '/ | grep '^<a' | grep 'wp2md.phar' | sed s/'.*href="'// | sed s/'".*'//)
+	wget -q --show-progress "https://github.com/$filelink" -O /tmp/wp2md
 	chmod +x /tmp/wp2md
 fi
 /tmp/wp2md convert < assets/readme.txt > README.md
-index="## Index ##\n\n"
-grep '^## ' README.md | sed s/"## "// | sed s/" ##"// | sed s/" "/-/g > /tmp/wpsol_readme
+index="## Index \n\n"
+grep '^## ' README.md | sed s/'## '// | sed s/' $'// | sed s/' '/-/g > /tmp/wpsol_readme
 while read line
 do
 	line_lower=$(echo "$line" | tr '[:upper:]' '[:lower:]')
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/wpsol_readme
 
-sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
-sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/'# wpSOL #'/"# wpSOL #\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
+sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
 
-sed -i s/'## Description ##'/"${index}\n## Description ##"/ README.md
+sed -i s/'## Description '/"${index}\n## Description "/ README.md
 imgcache=$(date +%Y%m%d)
 sed -i s/'.png'/".png?rev=$imgcache"/ README.md
 
