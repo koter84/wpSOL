@@ -172,8 +172,7 @@ done
 echo "> convert wordpress-readme to github-readme"
 if [ ! -f /tmp/wp2md ]
 then
-	filelink=$(wget -O - -q https://github.com/wpreadme2markdown/wp-readme-to-markdown/releases/latest | sed s/'<a '/'\n<a '/ | grep '^<a' | grep 'wp2md.phar' | sed s/'.*href="'// | sed s/'".*'//)
-	wget -q --show-progress "https://github.com/$filelink" -O /tmp/wp2md
+	curl -s -L https://github.com/wpreadme2markdown/wp-readme-to-markdown/releases/latest | egrep -o '/wpreadme2markdown/wp-readme-to-markdown/releases/download/[0-9.]*/wp2md.phar' | wget --base=http://github.com/ -i - -O /tmp/wp2md
 	chmod +x /tmp/wp2md
 fi
 /tmp/wp2md convert < assets/readme.txt > README.md
@@ -193,6 +192,9 @@ sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Supported](https:\/\/img.shields.io\
 sed -i s/'## Description '/"${index}\n## Description "/ README.md
 imgcache=$(date +%Y%m%d)
 sed -i s/'.png'/".png?rev=$imgcache"/ README.md
+
+# Replace double emtpy lines with one
+sed -i '/^$/N;/^\n$/D' README.md
 
 if [ $wuTEST == 1 ]
 then
