@@ -59,6 +59,16 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 1. enter the domain which is setup for wordpress and select the organization you want to give access.
 1. install and activate the plugin, that's it.
 
+if you want to filter logins based on SOL-roles you need to import an export from SOL
+
+1. go to [Leden: Alle actieve leden van eigen organisatie met hun functies](https://sol.scouting.nl/index.php?task=sel_selection&action=perform&button=&sel_id=2871)
+1. change 'Export format' to 'Komma gescheiden | Comma separ'
+1. change 'seperator' to 'punt komma | semicolon'
+1. click 'Execute'
+1. ToDo - go to the import funtion of wpSOL in your Admin-panel
+1. ToDo - select the file you just exported
+1. ToDo - click 'Import'
+
 ## Frequently Asked Questions 
 
 ### It's not working! 

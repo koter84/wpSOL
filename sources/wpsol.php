@@ -38,7 +38,14 @@ add_action('plugins_loaded', 'wpsol_init');
 // Init wpsol-admin
 function wpsol_admin_menu()
 {
-	add_options_page('wpSOL', 'wpSOL', 'manage_options', 'wpsol_settings', 'wpsol_admin_options');
+    $text = __('wpSOL', 'wpsol');
+    add_menu_page($text, $text, 'manage_options', 'wpsol', 'wpsol_admin_settings');
+
+    $text = __('Settings', 'wpsol');
+    add_submenu_page('wpsol', $text, $text, 'manage_options', 'wpsol', 'wpsol_admin_settings');
+
+	$text = __('Import', 'wpsol');
+    add_submenu_page('wpsol', $text, $text, 'manage_options', 'wpsol_import', 'wpsol_admin_import');
 }
 add_action('admin_menu', 'wpsol_admin_menu');
 

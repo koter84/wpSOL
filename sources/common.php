@@ -11,6 +11,21 @@
  * 'pref/timezone'           => 'timezone'
  */
 
+/*
+ * ToDo / SOL-problemen met authenticeren
+ *
+ * 'namePerson/friendly'     - bij het vergeten van je gebruikersnaam kan je een nieuwe gebruikersnaam aanvragen, deze kan dus wijzigen
+ * 'contact/email'           - email is in SOL zonder validatie te wijzigen, en kan dus niet gebruikt worden om een gebruiker te authenticeren
+ * 'namePerson'              - naam kan je wijzigen
+ * 'birthDate'               - geboortedatum staat vast, en kan alleen door de gegevensbeheerder of secretaris worden gewijzigd
+ * 'person/gender'           - geslacht kan je wijzigen
+ * 'contact/postalCode/home' - postcode kan je wijzigen
+ * 'contact/country/home'    - land kan je wijzigen, en is niet uniek genoeg om iemand te authenticeren
+ * 'pref/language'           - taal kan je wijzigen, en is al helemaal niet uniek genoeg om iemand te authenticeren
+ * 'pref/timezone'           - tijdzone kan je wijzigen, en is uiteraard ook niet handig om te gebruiken om iemand te authenticeren
+ *
+ */
+
 // Login Formulier
 function wpsol_wp_login_form_middle() // login_form_middle filter
 {
@@ -166,6 +181,7 @@ function wpsol_authenticate_username_password()
 			{ // geen user_id, wel email_id, login
 				// gebruiker bestaat maar met een andere username dan bij SOL, bijvoorbeeld de site beheerder o.i.d.
 				$user = get_user_by( 'id', $email_id );
+				// ToDo - dit is dus eigenlijk niet veilig, want iedereen kan zomaar zijn email-adres in SOL wijzigen
 			}
 			elseif( !$email_id )
 			{ // geen email_id, wel user_id, login
@@ -282,7 +298,7 @@ function wpsol_plugin_action_links( $links ) {
 }
 
 // Admin Settings Pagina
-function wpsol_admin_options()
+function wpsol_admin_settings()
 {
 	if ( !current_user_can( 'manage_options' ) )
 	{
@@ -406,6 +422,118 @@ function wpsol_admin_options()
 		</tr>";
 	}
 	?>
+	</table>
+	<p class="submit">
+	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />
+	</p>
+
+	</form>
+</div>
+<?php
+}
+function wpsol_admin_import()
+{
+	/*
+	 * ToDo
+	 * - bestand opslaan voor later gebruik ? (twee-staps import)
+	 * - basic user import (username is nog niet bekend, pas bij de eerste keer inloggen)
+	 * - functies koppelen aan rollen (abonnee, schrijver etc.)
+	 *
+	 * - bij groups-plugin functies koppelen aan groups-rollen
+	 * - bij members-plugin functies koppelen aan members-rollen
+	 */
+
+	if ( !current_user_can( 'manage_options' ) )
+	{
+		wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+	}
+
+	// ToDo - als Groups plugin active is, optie voor import met Groups weergeven
+//	if( !is_plugin_active('groups/groups.php') )
+//	{
+//		wp_die( "TRANSLATE: You need the plugin 'Groups' for this functionality to work." );
+//	}
+
+	// ToDo - als Members plugin active is, optie voor import met Members weergeven
+//	if( !is_plugin_active('members/members.php') )
+//	{
+//		wp_die( "TRANSLATE: You need the plugin 'Members' for this functionality to work." );
+//	}
+
+	// See if the user has posted us some information
+	$hidden_field_name = 'wpsol_hidden';
+	if( isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y' )
+	{
+		// DeBuG
+		echo "<!-- ".print_r($_POST, true)." -->\n";
+		echo "<!-- ".print_r($_FILES, true)." -->\n";
+
+		// original first-line from selectie_2871.csv
+		$orig_first_line = '"lidnummer";"lid voornaam";"lid initialen";"lid tussenvoegsel";"lid achternaam";"lid straat";"lid huisnummer";"lid toevoegsel huisnr";"lid postcode";"lid plaats";"lid land";"lid mailadres";"Lid mailadres ouder/verzorger";"Lid mailadres ouder/verzorger 2";"Lid geslacht";"lid geboortedatum";"lid mobiel";"lid telefoon";"functie";"functie startdatum";"Functie status";"Functienummer";"Functietype";"speleenheid soort";"speleenheid";"Speleenheidnummer";"organisatienummer";"organisatie categorie";"organisatie";"organisatie plaats"';
+
+		if($_FILES['sol_export']['error'] == 0 && $_FILES['sol_export']['type'] == 'text/csv')
+		{
+			$fp = fopen($_FILES['sol_export']['tmp_name'], 'r');
+			$first_line = trim(fgets($fp));
+			if($first_line == $orig_first_line)
+			{
+				echo "<!-- ".$first_line." -->\n";
+				
+				$first_line_array = explode(";", strtolower(str_replace('"', '', $first_line)));
+
+				$functies = array();
+				$speleenheden = array();
+
+				while(($line = fgets($fp)) !== false)
+				{
+					echo "<!-- ".$line." -->\n";
+
+					$lid = array_combine($first_line_array, explode(";", str_replace('"', '', trim($line))));
+
+					echo "<!-- ".print_r($lid, true)." -->\n";
+
+					$leden++;
+					$functies[$lid['functie']]++;
+					$speleenheden[$lid['speleenheid']]++;
+				}
+
+				echo "Functies: <pre>".print_r($functies, true)."</pre>";
+				echo "Speleenheden: <pre>".print_r($speleenheden, true)."</pre>";
+
+				// Put an settings updated message on the screen
+				echo "<div class=\"updated\"><p><strong>".__('Settings Saved', 'wpsol')."</strong></p></div>";
+			}
+			else
+			{
+				// Put an failed message on the screen
+				echo "<div class=\"updated\"><p><strong>TRANSLATE: File has wrong format</strong></p></div>";
+			}
+			
+			fclose($fp);
+		}
+		else
+		{
+			// Put an failed message on the screen
+			echo "<div class=\"updated\"><p><strong>TRANSLATE: Uploading Failed</strong></p></div>";
+		}
+    }
+
+    // Now display the settings editing screen
+    ?>
+<div class="wrap">
+	<div id="icon-options-general" class="icon32"><br></div>
+	<h2><?php _e('wpSOL [ScoutsOnLine] Import', 'wpsol'); ?></h2>
+	<form name="wpsol_settings_form" method="post" action="" enctype="multipart/form-data">
+	<input type="hidden" name="<?php echo $hidden_field_name; ?>" value="Y">
+	<p>TRANSLATE: Some explanation for downloading and importing the right file</p>
+	<table class="form-table">
+		<tr valign="top">
+			<th scope="row"><label for="sol_export">TRANSLATE: SOL Export File</label></th>
+			<td>
+				<input type="file" name="sol_export">
+				<p class="description">TRANSLATE: The file from sol.scouting.nl</p>
+			</td>
+		</tr>
 	</table>
 	<p class="submit">
 	<input type="submit" name="Submit" class="button-primary" value="<?php esc_attr_e('Save Changes') ?>" />

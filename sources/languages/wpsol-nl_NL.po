@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wpSOL 1.1.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpSOL\n"
-"POT-Creation-Date: 2016-08-16 00:00:00+00:00\n"
+"POT-Creation-Date: 2016-11-08 00:00:00+00:00\n"
 "PO-Revision-Date: 2014-01-07 16:14+0200\n"
 "Last-Translator: Dennis Koot <koter84@gmail.com>\n"
 "Language-Team: Dennis Koot <koter84@gmail.com>\n"
@@ -82,11 +82,11 @@ msgstr "Het inloggen is mislukt met openid-mode: \"%s\""
 msgid "wpSOL Support"
 msgstr "wpSOL Support"
 
-#: common.php:280
+#: common.php:280 wpsol.php:44
 msgid "Settings"
 msgstr "Instellingen"
 
-#: common.php:289
+#: common.php:289 common.php:432
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Je hebt onvoldoende rechten voor het bekijken van deze pagina."
 
@@ -154,7 +154,7 @@ msgstr "Dashboard"
 msgid "After logout redirect user to: "
 msgstr "Na uitloggen redirect naar: "
 
-#: common.php:357
+#: common.php:357 common.php:488
 msgid "Settings Saved"
 msgstr "Instellingen Opgeslagen"
 
@@ -162,13 +162,23 @@ msgstr "Instellingen Opgeslagen"
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr "wpSOL [ScoutsOnLine] Instellingen"
 
-#: common.php:411
+#: common.php:411 common.php:523
 msgid "Save Changes"
 msgstr "Wijzigingen Opslaan"
 
+#: common.php:509
+msgid "wpSOL [ScoutsOnLine] Import"
+msgstr "wpSOL [ScoutsOnLine] Import"
+
+#. #-#-#-#-#  wpsol.pot (wpSOL 1.1.11)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
+#: wpsol.php:41
 msgid "wpSOL"
 msgstr "wpSOL"
+
+#: wpsol.php:47
+msgid "Import"
+msgstr "Import"
 
 #. Plugin URI of the plugin/theme
 msgid "https://github.com/koter84/wpSOL"

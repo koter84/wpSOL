@@ -72,11 +72,11 @@ msgstr ""
 msgid "wpSOL Support"
 msgstr ""
 
-#: common.php:280
+#: common.php:280 wpsol.php:44
 msgid "Settings"
 msgstr ""
 
-#: common.php:289
+#: common.php:289 common.php:432
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 msgid "After logout redirect user to: "
 msgstr ""
 
-#: common.php:357
+#: common.php:357 common.php:488
 msgid "Settings Saved"
 msgstr ""
 
@@ -150,12 +150,22 @@ msgstr ""
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr ""
 
-#: common.php:411
+#: common.php:411 common.php:523
 msgid "Save Changes"
 msgstr ""
 
+#: common.php:509
+msgid "wpSOL [ScoutsOnLine] Import"
+msgstr ""
+
+#. #-#-#-#-#  wpsol.pot (wpSOL 1.1.11)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
+#: wpsol.php:41
 msgid "wpSOL"
+msgstr ""
+
+#: wpsol.php:47
+msgid "Import"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
