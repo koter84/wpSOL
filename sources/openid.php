@@ -56,8 +56,9 @@ class LightOpenID
 		 , $capath = null
 		 , $cainfo = null
 		 , $data
-		 , $mode;
-	private $identity, $claimed_id;
+		 , $mode
+		 , $identity;
+	private $claimed_id;
 	protected $server, $version, $trustRoot, $aliases, $identifier_select = false
 			, $ax = false, $sreg = false, $setup_url = null, $headers = array();
 	static protected $ax_to_sreg = array(
