@@ -100,39 +100,41 @@ class LightOpenID
 
 	protected function __set($name, $value)
 	{
-		switch ($name) {
-		case 'identity':
-			if (strlen($value = trim((String) $value))) {
-				if (preg_match('#^xri:/*#i', $value, $m)) {
-					$value = substr($value, strlen($m[0]));
-				} elseif (!preg_match('/^(?:[=@+\$!\(]|https?:)/i', $value)) {
-					$value = "http://$value";
+		switch ($name)
+		{
+			case 'identity':
+				if (strlen($value = trim((String) $value))) {
+					if (preg_match('#^xri:/*#i', $value, $m)) {
+						$value = substr($value, strlen($m[0]));
+					} elseif (!preg_match('/^(?:[=@+\$!\(]|https?:)/i', $value)) {
+						$value = "http://$value";
+					}
+					if (preg_match('#^https?://[^/]+$#i', $value, $m)) {
+						$value .= '/';
+					}
 				}
-				if (preg_match('#^https?://[^/]+$#i', $value, $m)) {
-					$value .= '/';
-				}
-			}
-			$this->$name = $this->claimed_id = $value;
-			break;
-		case 'trustRoot':
-		case 'realm':
-			$this->trustRoot = trim($value);
+				$this->$name = $this->claimed_id = $value;
+				break;
+			case 'trustRoot':
+			case 'realm':
+				$this->trustRoot = trim($value);
 		}
 	}
 
 	protected function __get($name)
 	{
-		switch ($name) {
-		case 'identity':
-			# We return claimed_id instead of identity,
-			# because the developer should see the claimed identifier,
-			# i.e. what he set as identity, not the op-local identifier (which is what we verify)
-			return $this->claimed_id;
-		case 'trustRoot':
-		case 'realm':
-			return $this->trustRoot;
-		case 'mode':
-			return empty($this->data['openid_mode']) ? null : $this->data['openid_mode'];
+		switch ($name)
+		{
+			case 'identity':
+				# We return claimed_id instead of identity,
+				# because the developer should see the claimed identifier,
+				# i.e. what he set as identity, not the op-local identifier (which is what we verify)
+				return $this->claimed_id;
+			case 'trustRoot':
+			case 'realm':
+				return $this->trustRoot;
+			case 'mode':
+				return empty($this->data['openid_mode']) ? null : $this->data['openid_mode'];
 		}
 	}
 
