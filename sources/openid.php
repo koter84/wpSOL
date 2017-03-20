@@ -104,13 +104,18 @@ class LightOpenID
 		switch ($name)
 		{
 			case 'identity':
-				if (strlen($value = trim((String) $value))) {
-					if (preg_match('#^xri:/*#i', $value, $m)) {
+				if(strlen($value = trim((String) $value)))
+				{
+					if(preg_match('#^xri:/*#i', $value, $m))
+					{
 						$value = substr($value, strlen($m[0]));
-					} elseif (!preg_match('/^(?:[=@+\$!\(]|https?:)/i', $value)) {
+					}
+					elseif(!preg_match('/^(?:[=@+\$!\(]|https?:)/i', $value))
+					{
 						$value = "http://$value";
 					}
-					if (preg_match('#^https?://[^/]+$#i', $value, $m)) {
+					if(preg_match('#^https?://[^/]+$#i', $value, $m))
+					{
 						$value .= '/';
 					}
 				}
