@@ -828,7 +828,7 @@ class LightOpenID
 		$alias = null;
 		if(isset($this->data['openid_ns_ax']) && $this->data['openid_ns_ax'] != 'http://openid.net/srv/ax/1.0')
 		{
-# It's the most likely case, so we'll check it before
+			# It's the most likely case, so we'll check it before
 			$alias = 'ax';
 		}
 		else
@@ -910,7 +910,7 @@ class LightOpenID
 	{
 		if(isset($this->data['openid_ns']) && $this->data['openid_ns'] == 'http://specs.openid.net/auth/2.0')
 		{
-# OpenID 2.0
+			# OpenID 2.0
 			# We search for both AX and SREG attributes, with AX taking precedence.
 			return $this->getAxAttributes() + $this->getSregAttributes();
 		}
