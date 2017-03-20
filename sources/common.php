@@ -135,7 +135,7 @@ function wpsol_authenticate_username_password()
 	}
 	if($openid->mode)
 	{
-		if($openid->validate())
+		if($openid->validate() === true)
 		{
 			$new_user = false;
 
@@ -151,7 +151,7 @@ function wpsol_authenticate_username_password()
 				if(get_option('wpsol_autocreate'))
 				{
 					$random_password = wp_generate_password(18, false);
-					$user_id = wp_create_user($username, $random_password, $email);
+					wp_create_user($username, $random_password, $email);
 					$new_user = true;
 					$user = get_user_by('email', $email);
 				}

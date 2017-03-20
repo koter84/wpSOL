@@ -300,6 +300,7 @@ class LightOpenID
 		}
 
 		$params = http_build_query($params, '', '&');
+		$opts = array();
 		switch ($method)
 		{
 			case 'GET':
