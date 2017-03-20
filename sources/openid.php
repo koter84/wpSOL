@@ -76,14 +76,14 @@ class LightOpenID
 	public function __construct($host)
 	{
 		$this->trustRoot = (strpos($host, '://') ? $host : 'http://'.$host);
-		if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+		if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
 			|| (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
 			&& $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
 		) {
 			$this->trustRoot = (strpos($host, '://') ? $host : 'https://'.$host);
 		}
 
-		if (($host_end = strpos($this->trustRoot, '/', 8)) !== false)
+		if(($host_end = strpos($this->trustRoot, '/', 8)) !== false)
 		{
 			$this->trustRoot = substr($this->trustRoot, 0, $host_end);
 		}
@@ -93,7 +93,7 @@ class LightOpenID
 
 		$this->data = ($_SERVER['REQUEST_METHOD'] === 'POST') ? $_POST : $_GET;
 
-		if (!function_exists('curl_init') && !in_array('https', stream_get_wrappers()))
+		if(!function_exists('curl_init') && !in_array('https', stream_get_wrappers()))
 		{
 			throw new ErrorException('You must have either https wrappers or curl enabled.');
 		}
@@ -101,10 +101,10 @@ class LightOpenID
 
 	protected function __set($name, $value)
 	{
-		switch ($name)
+		switch($name)
 		{
 			case 'identity':
-				if(strlen($value = trim((String) $value)))
+				if(strlen($value = trim((String)$value)))
 				{
 					if(preg_match('#^xri:/*#i', $value, $m))
 					{
@@ -129,7 +129,7 @@ class LightOpenID
 
 	protected function __get($name)
 	{
-		switch ($name)
+		switch($name)
 		{
 			case 'identity':
 				# We return claimed_id instead of identity,
@@ -152,13 +152,13 @@ class LightOpenID
 	 */
 	protected function hostExists($url)
 	{
-		if (strpos($url, '/') === false) {
+		if(strpos($url, '/') === false) {
 			$server = $url;
 		} else {
 			$server = @parse_url($url, PHP_URL_HOST);
 		}
 
-		if (!$server) {
+		if(!$server) {
 			return false;
 		}
 
@@ -307,7 +307,7 @@ class LightOpenID
 
 		$params = http_build_query($params, '', '&');
 		$opts = array();
-		switch ($method)
+		switch($method)
 		{
 			case 'GET':
 				$opts = array(
@@ -500,7 +500,7 @@ class LightOpenID
 								return "";
 							}
 							# Does the server advertise support for either AX or SREG?
-							$this->ax   = (bool) strpos($content, '<Type>http://openid.net/srv/ax/1.0</Type>');
+							$this->ax   = (bool)strpos($content, '<Type>http://openid.net/srv/ax/1.0</Type>');
 							$this->sreg = strpos($content, '<Type>http://openid.net/sreg/1.0</Type>')
 									   || strpos($content, '<Type>http://openid.net/extensions/sreg/1.1</Type>');
 
@@ -615,7 +615,7 @@ class LightOpenID
 		if(!empty($this->optional))
 		{
 			$params['openid.sreg.optional'] = array();
-			foreach ($this->optional as $optional)
+			foreach($this->optional as $optional)
 			{
 				if(!isset(self::$ax_to_sreg[$optional]))
 					continue;
@@ -827,7 +827,8 @@ class LightOpenID
 	{
 		$alias = null;
 		if(isset($this->data['openid_ns_ax']) && $this->data['openid_ns_ax'] != 'http://openid.net/srv/ax/1.0')
-		{ # It's the most likely case, so we'll check it before
+		{
+# It's the most likely case, so we'll check it before
 			$alias = 'ax';
 		}
 		else
@@ -908,7 +909,8 @@ class LightOpenID
 	public function getAttributes()
 	{
 		if(isset($this->data['openid_ns']) && $this->data['openid_ns'] == 'http://specs.openid.net/auth/2.0')
-		{ # OpenID 2.0
+		{
+# OpenID 2.0
 			# We search for both AX and SREG attributes, with AX taking precedence.
 			return $this->getAxAttributes() + $this->getSregAttributes();
 		}
