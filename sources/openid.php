@@ -71,7 +71,7 @@ class LightOpenID
         'pref/timezone'           => 'timezone',
         );
 
-    function __construct($host)
+    public function __construct($host)
     {
         $this->trustRoot = (strpos($host, '://') ? $host : 'http://'.$host);
         if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
@@ -95,7 +95,7 @@ class LightOpenID
         }
     }
 
-    function __set($name, $value)
+    protected function __set($name, $value)
     {
         switch ($name) {
         case 'identity':
@@ -117,7 +117,7 @@ class LightOpenID
         }
     }
 
-    function __get($name)
+    protected function __get($name)
     {
         switch ($name) {
         case 'identity':
@@ -139,7 +139,7 @@ class LightOpenID
      * @param $url url to check
      * @return Bool true, if the server exists; false otherwise
      */
-    function hostExists($url)
+    protected function hostExists($url)
     {
         if (strpos($url, '/') === false) {
             $server = $url;
@@ -400,7 +400,7 @@ class LightOpenID
      * @return String OP Endpoint (i.e. OpenID provider address).
      * @throws ErrorException
      */
-    function discover($url)
+    protected function discover($url)
     {
         if (!$url) throw new ErrorException('No identity supplied.');
         # Use xri.net proxy to resolve i-name identities
@@ -656,7 +656,7 @@ class LightOpenID
      * @return String The authentication url.
      * @throws ErrorException
      */
-    function authUrl($immediate = false)
+    public function authUrl($immediate = false)
     {
         if ($this->setup_url && !$immediate) return $this->setup_url;
         if (!$this->server) $this->discover($this->identity);
@@ -672,7 +672,7 @@ class LightOpenID
      * @return Bool Whether the verification was successful.
      * @throws ErrorException
      */
-    function validate()
+    public function validate()
     {
         # If the request was using immediate mode, a failure may be reported
         # by presenting user_setup_url (for 1.1) or reporting
@@ -809,7 +809,7 @@ class LightOpenID
      *     * @return Array Array of attributes with keys being the AX schema names, e.g. 'contact/email'
      * @see http://www.axschema.org/types/
      */
-    function getAttributes()
+    public function getAttributes()
     {
         if (isset($this->data['openid_ns'])
             && $this->data['openid_ns'] == 'http://specs.openid.net/auth/2.0'
