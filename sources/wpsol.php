@@ -46,4 +46,4 @@ add_action('admin_menu', 'wpsol_admin_menu');
 add_action('wp_logout', 'wpsol_logout_redirect');
 
 // Setup defaults during installation
-register_activation_hook( __FILE__, 'wpsol_install');
+register_activation_hook(__FILE__, 'wpsol_install');
