@@ -55,7 +55,8 @@ function wpsol_sidebar_login()
 	$result = "";
 
 	if(is_user_logged_in())
-	{ // ingelogd
+	{
+		// ingelogd
 		if(get_option('wpsol_widget_links_show'))
 		{
 			$result = "<h1 class=\"widget-title\">".__('Members-Area', 'wpsol')."</h1>";
@@ -78,10 +79,10 @@ function wpsol_sidebar_login()
 		$result = wp_login_form(array('echo'=>false, 'remember'=>false));
 
 		// verwijder username-input
-		$result = substr($result, 0, strpos($result, '<p class="login-username">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-username">'))+4);
+		$result = substr($result, 0, strpos($result, '<p class="login-username">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-username">')) + 4);
 
 		// verwijder password-input
-		$result = substr($result, 0, strpos($result, '<p class="login-password">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-password">'))+4);
+		$result = substr($result, 0, strpos($result, '<p class="login-password">')).substr($result, strpos($result, '</p>', strpos($result, '<p class="login-password">')) + 4);
 	}
 
 	if($result != "")
@@ -112,17 +113,18 @@ function wpsol_authenticate_username_password()
 	$openid = new LightOpenID(get_site_url());
 
 	if(array_key_exists('openid_identifier', $_POST) && $_POST['openid_identifier'])
-	{ // Attempt to authenticate user
+	{
+		// Attempt to authenticate user
 		try
 		{
 			if(!$openid->mode)
 			{
-				if(isset( $_POST['openid_identifier']))
+				if(isset($_POST['openid_identifier']))
 				{
 					$openid->identity = 'https://login.scouting.nl/user/'.$_POST['openid_identifier'];
 					# The following two lines request email, full name, and a nickname
 					# from the provider. Remove them if you don't need that data.
-					$openid->required = array('contact/email','namePerson', 'namePerson/friendly');
+					$openid->required = array('contact/email', 'namePerson', 'namePerson/friendly');
 					$openid->optional = array('birthDate', 'person/gender', 'contact/postalCode/home', 'contact/country/home', 'pref/language', 'pref/timezone');
 					header('Location: '.$openid->authUrl());
 				}
@@ -147,7 +149,8 @@ function wpsol_authenticate_username_password()
 			$email_id = email_exists($email);
 
 			if(!$user_id && !$email_id)
-			{ // geen user_id, geen email_id, create new user.
+			{
+				// geen user_id, geen email_id, create new user.
 				if(get_option('wpsol_autocreate'))
 				{
 					$random_password = wp_generate_password(18, false);
@@ -163,28 +166,33 @@ function wpsol_authenticate_username_password()
 				}
 			}
 			elseif(!$user_id)
-			{ // geen user_id, wel email_id, login
+			{
+				// geen user_id, wel email_id, login
 				// gebruiker bestaat maar met een andere username dan bij SOL, bijvoorbeeld de site beheerder o.i.d.
 				$user = get_user_by('id', $email_id);
 			}
 			elseif(!$email_id)
-			{ // geen email_id, wel user_id, login
+			{
+				// geen email_id, wel user_id, login
 				$user = get_user_by('id', $user_id);
 				// update email voor de user, aangezien die blijkbaar veranderd is
 				wp_update_user(array('ID' => $user_id, 'user_email' => $email));
 			}
 			elseif($user_id == $email_id)
-			{ // login.
+			{
+				// login.
 				$user = get_user_by('id', $user_id);
 			}
 			elseif($user_id != $email_id)
-			{ // user_id en email_id komen niet overeen
+			{
+				// user_id en email_id komen niet overeen
 				global $error;
 				$error = sprintf(__('wp-user-id based on username (%s) does not match wp-user-id based on email (%s)', 'wpsol'), $username, $email).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
 				return false;
 			}
 			else
-			{ // uhm, geen idee wat er fout gaat...
+			{
+				// uhm, geen idee wat er fout gaat...
 				global $error;
 				$error = sprintf(__('Error 14: Something went wrong, please notify the site administrator [%s|%s|%s|%s]', 'wpsol'), $username, $email, $user_id, $email_id).'<br/><a href="https://wordpress.org/plugins/wpsol/installation/">'.__('wpSOL Setup Instructions', 'wpsol').'</a>';
 				return false;
@@ -195,10 +203,10 @@ function wpsol_authenticate_username_password()
 				switch(get_option('wpsol_display_name'))
 				{
 					case 'firstname':
-						$display_name = substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ") );
+						$display_name = substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " "));
 						break;
 					case 'lastname':
-						$display_name = substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 );
+						$display_name = substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ") + 1);
 						break;
 					case 'username':
 						$display_name = $username;
@@ -216,7 +224,7 @@ function wpsol_authenticate_username_password()
 			if($new_user || get_option('wpsol_force_first_last_name'))
 			{
 				update_user_meta($user->ID, 'first_name', substr($gegevens['namePerson'], 0, strpos($gegevens['namePerson'], " ")));
-				update_user_meta($user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 ));
+				update_user_meta($user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ") + 1));
 			}
 
 			// add login filter to redirect
@@ -340,7 +348,7 @@ function wpsol_admin_options()
 
 	// See if the user has posted us some information
 	$hidden_field_name = 'wpsol_hidden';
-	if(isset($_POST[ $hidden_field_name ]) && $_POST[ $hidden_field_name ] == 'Y')
+	if(isset($_POST[$hidden_field_name]) && $_POST[$hidden_field_name] == 'Y')
 	{
 		foreach($options as $key => $opt)
 		{

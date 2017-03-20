@@ -152,13 +152,17 @@ class LightOpenID
 	 */
 	protected function hostExists($url)
 	{
-		if(strpos($url, '/') === false) {
+		if(strpos($url, '/') === false)
+		{
 			$server = $url;
-		} else {
+		}
+		else
+		{
 			$server = @parse_url($url, PHP_URL_HOST);
 		}
 
-		if(!$server) {
+		if(!$server)
+		{
 			return false;
 		}
 
