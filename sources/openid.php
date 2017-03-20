@@ -137,7 +137,7 @@ class LightOpenID
      * Checks if the server specified in the url exists.
      *
      * @param $url url to check
-     * @return true, if the server exists; false otherwise
+     * @return Bool true, if the server exists; false otherwise
      */
     function hostExists($url)
     {
@@ -313,7 +313,7 @@ class LightOpenID
 
             $url = $url . ($params ? '?' . $params : '');
             $headers = get_headers ($url);
-            if(!$headers) {
+            if(empty($headers)) {
                 return array();
             }
 
@@ -408,11 +408,6 @@ class LightOpenID
             $url = "https://xri.net/$url";
         }
 
-        # We save the original url in case of Yadis discovery failure.
-        # It can happen when we'll be lead to an XRDS document
-        # which does not have any OpenID2 services.
-        $originalUrl = $url;
-
         # A flag to disable yadis discovery in case of failure in headers.
         $yadis = true;
 
@@ -450,7 +445,7 @@ class LightOpenID
                             preg_match('#<URI.*?>(.*)</URI>#', $content, $server);
                             preg_match('#<(Local|Canonical)ID>(.*)</\1ID>#', $content, $delegate);
                             if (empty($server)) {
-                                return false;
+                                return "";
                             }
                             # Does the server advertise support for either AX or SREG?
                             $this->ax   = (bool) strpos($content, '<Type>http://openid.net/srv/ax/1.0</Type>');
@@ -472,7 +467,7 @@ class LightOpenID
                             preg_match('#<URI.*?>(.*)</URI>#', $content, $server);
                             preg_match('#<.*?Delegate>(.*)</.*?Delegate>#', $content, $delegate);
                             if (empty($server)) {
-                                return false;
+                                return "";
                             }
                             # AX can be used only with OpenID 2.0, so checking only SREG
                             $this->sreg = strpos($content, '<Type>http://openid.net/sreg/1.0</Type>')
@@ -487,10 +482,6 @@ class LightOpenID
                         }
                     }
 
-                    $next = true;
-                    $yadis = false;
-                    $url = $originalUrl;
-                    $content = null;
                     break;
                 }
                 if ($next) continue;
@@ -510,7 +501,7 @@ class LightOpenID
                 }
             }
 
-            if (!$content) $content = $this->request($url, 'GET');
+            if (!isset($content)) $content = $this->request($url, 'GET');
 
             # At this point, the YADIS Discovery has failed, so we'll switch
             # to openid2 HTML discovery, then fallback to openid 1.1 discovery.
@@ -547,7 +538,7 @@ class LightOpenID
         # That's because it's fully backwards compatibile with 1.0, and some providers
         # advertise 1.0 even if they accept only 1.1. One such provider is myopenid.com
         $params['openid.ns.sreg'] = 'http://openid.net/extensions/sreg/1.1';
-        if ($this->required) {
+        if (!empty($this->required)) {
             $params['openid.sreg.required'] = array();
             foreach ($this->required as $required) {
                 if (!isset(self::$ax_to_sreg[$required])) continue;
@@ -556,7 +547,7 @@ class LightOpenID
             $params['openid.sreg.required'] = implode(',', $params['openid.sreg.required']);
         }
 
-        if ($this->optional) {
+        if (!empty($this->optional)) {
             $params['openid.sreg.optional'] = array();
             foreach ($this->optional as $optional) {
                 if (!isset(self::$ax_to_sreg[$optional])) continue;
@@ -570,7 +561,7 @@ class LightOpenID
     protected function axParams()
     {
         $params = array();
-        if ($this->required || $this->optional) {
+        if (!empty($this->required) || !empty($this->optional)) {
             $params['openid.ns.ax'] = 'http://openid.net/srv/ax/1.0';
             $params['openid.ax.mode'] = 'fetch_request';
             $this->aliases  = array();
@@ -594,12 +585,12 @@ class LightOpenID
                 $params['openid.ax.count.' . $alias] = $count;
             }
 
-            # Don't send empty ax.requied and ax.if_available.
+            # Don't send empty ax.required and ax.if_available.
             # Google and possibly other providers refuse to support ax when one of these is empty.
-            if($required) {
+            if(!empty($required)) {
                 $params['openid.ax.required'] = implode(',', $required);
             }
-            if($optional) {
+            if(!empty($optional)) {
                 $params['openid.ax.if_available'] = implode(',', $optional);
             }
         }
@@ -661,8 +652,8 @@ class LightOpenID
 
     /**
      * Returns authentication url. Usually, you want to redirect your user to it.
+     * @param Bool $immediate ??Whether to request OP to select identity for an user in OpenID 2. Does not affect OpenID 1.
      * @return String The authentication url.
-     * @param String $select_identifier Whether to request OP to select identity for an user in OpenID 2. Does not affect OpenID 1.
      * @throws ErrorException
      */
     function authUrl($immediate = false)
@@ -762,7 +753,7 @@ class LightOpenID
                 }
             }
         }
-        if (!$alias) {
+        if ($alias === null) {
             # An alias for AX schema has not been found,
             # so there is no AX data in the OP's response
             return array();
