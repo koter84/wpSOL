@@ -1,14 +1,14 @@
 <?php
 /*
- * 'namePerson/friendly'     => 'nickname',
- * 'contact/email'           => 'email',
- * 'namePerson'              => 'fullname',
- * 'birthDate'               => 'dob',
- * 'person/gender'           => 'gender',
- * 'contact/postalCode/home' => 'postcode',
- * 'contact/country/home'    => 'country',
- * 'pref/language'           => 'language',
- * 'pref/timezone'           => 'timezone'
+ * namePerson/friendly     : nickname
+ * contact/email           : email
+ * namePerson              : fullname
+ * birthDate               : dob
+ * person/gender           : gender
+ * contact/postalCode/home : postcode
+ * contact/country/home    : country
+ * pref/language           : language
+ * pref/timezone           : timezone
  */
 
 // Login Formulier
