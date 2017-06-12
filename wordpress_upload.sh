@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ToDo - add debug options to wpsol, which are removed when uploading to wordpress.org
+# ToDo - add debug options to plugin, which are removed when uploading to wordpress.org
 
 # options
 wuFORCE=0
@@ -52,35 +52,32 @@ do
 	shift
 done
 
+# ToDo - load from .conf file
+plugin_name="wpsol"
+plugin_name_disp="wpSOL"
+
 # make a zip file
 if [ $wuZIP == 1 ]
 then
 	# make a temp dir
-	wpsol_zip_dir=$(mktemp -dt wpsol-zip-XXXXXX)
+	temp_zip_dir=$(mktemp -dt ${plugin_name}-zip-XXXXXX)
 
 	# copy files to temp dir
-	mkdir "$wpsol_zip_dir/wpsol"
-	cp ./assets/readme.txt "$wpsol_zip_dir/wpsol"
-	cp ./sources/common.php "$wpsol_zip_dir/wpsol"
-	cp ./sources/openid.php "$wpsol_zip_dir/wpsol"
-	cp ./sources/scnllogo.png "$wpsol_zip_dir/wpsol"
-	cp ./sources/wpsol.php "$wpsol_zip_dir/wpsol"
-	mkdir "$wpsol_zip_dir/wpsol/languages"
-	cp ./sources/languages/wpsol.pot "$wpsol_zip_dir/wpsol/languages"
-	cp ./sources/languages/wpsol-nl_NL.mo "$wpsol_zip_dir/wpsol/languages"
-	cp ./sources/languages/wpsol-nl_NL.po "$wpsol_zip_dir/wpsol/languages"
+	mkdir "$temp_zip_dir/${plugin_name}"
+	cp ./assets/readme.txt "$temp_zip_dir/${plugin_name}"
+	cp -R ./sources/* "$temp_zip_dir/${plugin_name}"
 
 	# generate zip filename
-	wpsol_zip_name="/tmp/wpsol-test.zip"
+	temp_zip_name="/tmp/${plugin_name}-test.zip"
 
 	# zip temp dir
-	cd "$wpsol_zip_dir"
-	zip -rq "$wpsol_zip_name" ./wpsol
+	cd "$temp_zip_dir"
+	zip -rq "$temp_zip_name" ./${plugin_name}
 
 	# remove temp dir
-	rm -r "$wpsol_zip_dir"
+	rm -r "$temp_zip_dir"
 
-	echo "zip test-file: $wpsol_zip_name"
+	echo "zip test-file: $temp_zip_name"
 	exit
 fi
 
@@ -107,66 +104,69 @@ then
 	fi
 fi
 
-# check for existence of /tmp/wpsol_tmp_svn
-if [ -d /tmp/wpsol_tmp_svn ]
+# check for existence of /tmp/${plugin_name}_tmp_svn
+if [ -d /tmp/${plugin_name}_tmp_svn ]
 then
-	echo "! the temporary subversion repository was not removed by a previous run...[ /tmp/wpsol_tmp_svn ]"
+	echo "! the temporary subversion repository was not removed by a previous run...[ /tmp/${plugin_name}_tmp_svn ]"
 	exit
 fi
 
-# check for existence of /tmp/i18ntools
-if [ ! -d /tmp/i18ntools/ ]
+if [ -d ./sources/languages ]
 then
-	echo "> checkout i18ntools"
-
-	svn checkout http://i18n.svn.wordpress.org/tools/trunk/ /tmp/i18ntools > /dev/null
-	# - fail when svn checkout failed !
-	if [ ! -f /tmp/i18ntools/makepot.php ]
+	# check for existence of /tmp/i18ntools
+	if [ ! -d /tmp/i18ntools/ ]
 	then
-		echo "! i18ntools-checkout failed, stop."
-		rm -rf /tmp/i18ntools
-		exit
-	fi
-	# - fix some 'errors' in makepot.php
-	sed -i s/\'trunk\'/\'sources\'/ /tmp/i18ntools/makepot.php
-	sed -i s/\'Y-m-d\ H:i:s+00:00\'/\'Y-m-d\ 00:00:00+00:00\'/ /tmp/i18ntools/makepot.php
-fi
+		echo "> checkout i18ntools"
 
-# generate .pot file
-echo "> generate .pot file"
-php /tmp/i18ntools/makepot.php wp-plugin sources/ sources/languages/wpsol.pot
-
-# get Project-Id-Version from .pot file
-project_id_version=$(grep 'Project-Id-Version' sources/languages/wpsol.pot|cut -d\" -f2|sed s/"\\\n"//)
-
-# set languages
-languages=('nl_NL')
-for lang in "${languages[@]}"
-do
-	# update .po file from .pot
-	echo "> update $lang.po file from .pot"
-	msgmerge --update "sources/languages/wpsol-$lang.po" sources/languages/wpsol.pot
-	# compare .pot to .po (fail when incomplete)
-	echo "> compare .pot to $lang.po"
-	lang_compare=$(msgcmp "sources/languages/wpsol-$lang.po" sources/languages/wpsol.pot 2>&1)
-	if [ "$lang_compare" != "" ]
-	then
-		echo "! incomplete translation $lang"
-		echo "! $lang_compare"
-		if [ $wuFORCE == 1 ]
+		svn checkout http://i18n.svn.wordpress.org/tools/trunk/ /tmp/i18ntools > /dev/null
+		# - fail when svn checkout failed !
+		if [ ! -f /tmp/i18ntools/makepot.php ]
 		then
-			echo ">> FORCED CONTINUE..."
-		else
+			echo "! i18ntools-checkout failed, stop."
+			rm -rf /tmp/i18ntools
 			exit
 		fi
+		# - fix some 'errors' in makepot.php
+		sed -i s/\'trunk\'/\'sources\'/ /tmp/i18ntools/makepot.php
+		sed -i s/\'Y-m-d\ H:i:s+00:00\'/\'Y-m-d\ 00:00:00+00:00\'/ /tmp/i18ntools/makepot.php
 	fi
-	# update Project-Id-Version in .po from .pot
-	sed -i s/'.*Project-Id-Version.*'/"\"$project_id_version\\\n\""/ sources/languages/wpsol-nl_NL.po
-	# make .mo file
-	echo "> make $lang.mo file"
-	lang_make=$(msgfmt -o "sources/languages/wpsol-$lang.mo" -v "sources/languages/wpsol-$lang.po" 2>&1)
-	echo "> update $lang: $lang_make"
-done
+
+	# generate .pot file
+	echo "> generate .pot file"
+	php /tmp/i18ntools/makepot.php wp-plugin sources/ sources/languages/${plugin_name}.pot
+
+	# get Project-Id-Version from .pot file
+	project_id_version=$(grep 'Project-Id-Version' sources/languages/${plugin_name}.pot|cut -d\" -f2|sed s/"\\\n"//)
+
+	# set languages
+	languages=('nl_NL')
+	for lang in "${languages[@]}"
+	do
+		# update .po file from .pot
+		echo "> update $lang.po file from .pot"
+		msgmerge --update "sources/languages/${plugin_name}-$lang.po" sources/languages/${plugin_name}.pot
+		# compare .pot to .po (fail when incomplete)
+		echo "> compare .pot to $lang.po"
+		lang_compare=$(msgcmp "sources/languages/${plugin_name}-$lang.po" sources/languages/${plugin_name}.pot 2>&1)
+		if [ "$lang_compare" != "" ]
+		then
+			echo "! incomplete translation $lang"
+			echo "! $lang_compare"
+			if [ $wuFORCE == 1 ]
+			then
+				echo ">> FORCED CONTINUE..."
+			else
+				exit
+			fi
+		fi
+		# update Project-Id-Version in .po from .pot
+		sed -i s/'.*Project-Id-Version.*'/"\"$project_id_version\\\n\""/ sources/languages/${plugin_name}-nl_NL.po
+		# make .mo file
+		echo "> make $lang.mo file"
+		lang_make=$(msgfmt -o "sources/languages/${plugin_name}-$lang.mo" -v "sources/languages/${plugin_name}-$lang.po" 2>&1)
+		echo "> update $lang: $lang_make"
+	done
+fi
 
 # convert wordpress-readme to github-readme
 echo "> convert wordpress-readme to github-readme"
@@ -177,17 +177,17 @@ then
 fi
 /tmp/wp2md convert < assets/readme.txt > README.md
 index="## Index \n\n"
-grep '^## ' README.md | sed s/'## '// | sed s/' $'// | sed s/' '/-/g > /tmp/wpsol_readme
+grep '^## ' README.md | sed s/'## '// | sed s/' $'// | sed s/' '/-/g > /tmp/${plugin_name}_readme
 while read line
 do
 	line_lower=$(echo "$line" | tr '[:upper:]' '[:lower:]')
 	index="$index* [$line](#$line_lower)\n"
-done < /tmp/wpsol_readme
+done < /tmp/${plugin_name}_readme
 
-sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)\n"/ README.md
-sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
-sed -i s/'# wpSOL '/"# wpSOL \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/wpsol.svg)](https:\/\/wordpress.org\/plugins\/wpsol\/)"/ README.md
+sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)\n"/ README.md
+sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
 
 sed -i s/'## Description '/"${index}\n## Description "/ README.md
 imgcache=$(date +%Y%m%d)
@@ -198,7 +198,7 @@ sed -i '/^$/N;/^\n$/D' README.md
 
 if [ $wuTEST == 1 ]
 then
-	echo "> test changes on wpsol test system"
+	echo "> test changes on ${plugin_name} test system"
 	if [ ! -f ./wordpress_upload.conf ]
 	then
 		echo "! wptest_user=\"user\""
@@ -229,7 +229,7 @@ then
 	fi
 
 	echo "> rsync"
-	rsync --recursive --info=progress2 --delete ./sources/ $wptest_user@$wptest_host:$wptest_dir/wp-content/plugins/wpsol/
+	rsync --recursive --info=progress2 --delete ./sources/ $wptest_user@$wptest_host:$wptest_dir/wp-content/plugins/${plugin_name}/
 
 	echo "> chown wordpress www-dir"
 	ssh $wptest_user@$wptest_host chown -R $wptest_chown_user:$wptest_chown_group $wptest_dir/
@@ -281,19 +281,24 @@ then
 	echo "> check version numbers"
 	# get current version number from wordpress...
 	echo "> get current version number from wordpress..."
-	cv_plugin=$(curl -s http://plugins.svn.wordpress.org/wpsol/trunk/wpsol.php | grep Version | cut -d" " -f2)
+	cv_plugin=$(curl -s http://plugins.svn.wordpress.org/${plugin_name}/trunk/${plugin_name}.php | grep Version | cut -d" " -f2)
 	# get version number from local files
 	echo "> get version number from local files..."
-	cv_wpsol=$(grep Version sources/wpsol.php | cut -d" " -f2)
+	cv_local=$(grep Version sources/${plugin_name}.php | cut -d" " -f2)
 	cv_stable=$(grep 'Stable tag:' assets/readme.txt | cut -d" " -f3)
-	cv_lang=$(grep Project-Id-Version sources/languages/wpsol.pot | cut -d" " -f3 | cut -d"\\\\" -f1)
-	cv_langNL=$(grep Project-Id-Version sources/languages/wpsol-nl_NL.po | cut -d" " -f3 | cut -d"\\\\" -f1)
-
+	if [ -d sources/languages/ ]
+	then
+		cv_lang=$(grep Project-Id-Version sources/languages/${plugin_name}.pot | cut -d" " -f3 | cut -d"\\" -f1)
+		cv_langNL=$(grep Project-Id-Version sources/languages/${plugin_name}-nl_NL.po | cut -d" " -f3 | cut -d"\\" -f1)
+	else
+		cv_lang=$cv_local
+		cv_langNL=$cv_local
+	fi
 	# check matching version numbers in local files
 	echo "> check matching version numbers in local files"
-	if [ "$cv_wpsol" != "$cv_stable" ] || [ "$cv_wpsol" != "$cv_lang" ] || [ "$cv_wpsol" != "$cv_langNL" ]
+	if [ "$cv_local" != "$cv_stable" ] || [ "$cv_local" != "$cv_lang" ] || [ "$cv_local" != "$cv_langNL" ]
 	then
-		echo "> php:      $cv_wpsol"
+		echo "> php:      $cv_local"
 		echo "> stable:   $cv_stable"
 		echo "> pot:      $cv_lang"
 		echo "> nl_NL.po: $cv_langNL"
@@ -308,19 +313,19 @@ then
 
 	# check changelog for current version
 	echo "> check changelog for current version"
-	cv_changelog=$(grep "= $cv_wpsol =" assets/readme.txt)
+	cv_changelog=$(grep "= $cv_local =" assets/readme.txt)
 	if [ "$cv_changelog" == "" ]
 	then
-		echo ">! No Changelog for version $cv_wpsol"
+		echo ">! No Changelog for version $cv_local"
 		exit
 	fi
 
 	# check for version number increase
 	echo "> check for version number increase"
-	if [ "$cv_plugin" == "$cv_wpsol" ] || [ "$cv_plugin" == "$cv_stable" ] || [ "$cv_plugin" == "$cv_lang" ] || [ "$cv_plugin" == "$cv_langNL" ]
+	if [ "$cv_plugin" == "$cv_local" ] || [ "$cv_plugin" == "$cv_stable" ] || [ "$cv_plugin" == "$cv_lang" ] || [ "$cv_plugin" == "$cv_langNL" ]
 	then
 		echo "> WP.org:   $cv_plugin"
-		echo "> php:      $cv_wpsol"
+		echo "> php:      $cv_local"
 		echo "> stable:   $cv_stable"
 		echo "> pot:      $cv_lang"
 		echo "> nl_NL.po: $cv_langNL"
@@ -334,7 +339,7 @@ then
 	fi
 
 	# confirm version number increase
-	read -p "Increase version number from $cv_plugin to $cv_wpsol ? [y/N] " increase_ok
+	read -p "Increase version number from $cv_plugin to $cv_local ? [y/N] " increase_ok
 	if [ "$increase_ok" != "y" ] && [ "$increase_ok" != "Y" ]
 	then
 		echo "stop!"
@@ -349,31 +354,31 @@ then
 fi
 
 # subversion checkout
-svn checkout http://plugins.svn.wordpress.org/wpsol /tmp/wpsol_tmp_svn
-if [ ! -f /tmp/wpsol_tmp_svn/trunk/wpsol.php ]
+svn checkout http://plugins.svn.wordpress.org/${plugin_name} /tmp/${plugin_name}_tmp_svn
+if [ ! -f /tmp/${plugin_name}_tmp_svn/trunk/${plugin_name}.php ]
 then
 	echo "! plugin-checkout failed"
 	exit
 fi
 
 # rsync git release to svn trunk
-rsync --recursive --delete  sources/ /tmp/wpsol_tmp_svn/trunk/
+rsync --recursive --delete  sources/ /tmp/${plugin_name}_tmp_svn/trunk/
 
 # cp readme file to svn trunk
-cp assets/readme.txt /tmp/wpsol_tmp_svn/trunk/readme.txt
+cp assets/readme.txt /tmp/${plugin_name}_tmp_svn/trunk/readme.txt
 
 # cp screenshots to svn assets
-cp assets/screenshot* /tmp/wpsol_tmp_svn/assets/
+cp assets/screenshot* /tmp/${plugin_name}_tmp_svn/assets/
 
 # cp icons to svn assets
-cp assets/icon* /tmp/wpsol_tmp_svn/assets/
+cp assets/icon* /tmp/${plugin_name}_tmp_svn/assets/
 
 # cp banners to svn assets
-cp assets/banner* /tmp/wpsol_tmp_svn/assets/
+cp assets/banner* /tmp/${plugin_name}_tmp_svn/assets/
 
 # changedir, remember current dir
 startdir=$(pwd)
-cd /tmp/wpsol_tmp_svn
+cd /tmp/${plugin_name}_tmp_svn
 
 # add new and delete removed files from subversion
 files_to_add=$(svn status | grep "^\?")
@@ -390,22 +395,22 @@ fi
 # copy the code to a tags/VERSION directory
 if [ $wuRELEASE == 1 ]
 then
-	echo "> make a tags/$cv_wpsol directory on the wp.org SVN-server"
-	cp -r trunk "tags/$cv_wpsol"
-	svn add "tags/$cv_wpsol"
+	echo "> make a tags/$cv_local directory on the wp.org SVN-server"
+	cp -r trunk "tags/$cv_local"
+	svn add "tags/$cv_local"
 fi
 
 # check-in the changes
 if [ $wuRELEASE == 1 ]
 then
-	commit_msg="auto-commit [] stable: $cv_plugin -> $cv_wpsol"
+	commit_msg="auto-commit [] stable: $cv_plugin -> $cv_local"
 else
 	read -p "please enter a commit message: " trunk_commit_msg
 	if [ "$trunk_commit_msg" == "" ]
 	then
 		echo "! you need to specify a commit message"
 		# remove temporary svn repo
-		rm -rf /tmp/wpsol_tmp_svn
+		rm -rf /tmp/${plugin_name}_tmp_svn
 		exit
 	fi
 
@@ -418,14 +423,14 @@ svn ci -m "$commit_msg"
 cd "$startdir"
 
 # remove temporary svn repo
-rm -rf /tmp/wpsol_tmp_svn
+rm -rf /tmp/${plugin_name}_tmp_svn
 
 echo "> Done!"
 
 echo "> you should:"
 if [ $wuRELEASE == 1 ]
 then
-	echo "> git push && git tag $cv_wpsol && git push origin $cv_wpsol"
+	echo "> git push && git tag $cv_local && git push origin $cv_local"
 else
 	echo "> git push"
 fi
