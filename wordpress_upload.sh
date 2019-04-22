@@ -172,10 +172,10 @@ fi
 echo "> convert wordpress-readme to github-readme"
 if [ ! -f /tmp/wp2md ]
 then
-	curl -s -L https://github.com/wpreadme2markdown/wp-readme-to-markdown/releases/latest | egrep -o '/wpreadme2markdown/wp-readme-to-markdown/releases/download/[0-9.]*/wp2md.phar' | wget --base=http://github.com/ -i - -O /tmp/wp2md
+	curl -s -L https://github.com/wpreadme2markdown/wp2md/releases/latest | egrep -o '/wpreadme2markdown/wp2md/releases/download/[0-9.]*/wp2md.phar' | wget --base=http://github.com/ -i - -O /tmp/wp2md
 	chmod +x /tmp/wp2md
 fi
-/tmp/wp2md convert < assets/readme.txt > README.md
+/tmp/wp2md assets/readme.txt README.md
 index="## Index \n\n"
 grep '^## ' README.md | sed s/'## '// | sed s/' $'// | sed s/' '/-/g > /tmp/${plugin_name}_readme
 while read line
@@ -184,10 +184,10 @@ do
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/${plugin_name}_readme
 
-sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/ai\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)\n"/ README.md
-sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
-sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
-sed -i s/'# ${plugin_name_disp} '/"# ${plugin_name_disp} \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/installs\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)\n"/ README.md
+sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
 
 sed -i s/'## Description '/"${index}\n## Description "/ README.md
 imgcache=$(date +%Y%m%d)
@@ -357,8 +357,20 @@ fi
 svn checkout http://plugins.svn.wordpress.org/${plugin_name} /tmp/${plugin_name}_tmp_svn
 if [ ! -f /tmp/${plugin_name}_tmp_svn/trunk/${plugin_name}.php ]
 then
-	echo "! plugin-checkout failed"
-	exit
+	if [ ! -d /tmp/${plugin_name}_tmp_svn/trunk/ ]
+	then
+		echo "! plugin-checkout failed"
+		rm -rf /tmp/${plugin_name}_tmp_svn
+		exit
+	fi
+
+	# the main-file is not in svn, is this a new plugin?
+	read -p "The file svn://trunk/${plugin_name}.php does not exist, is this the first commit for this plugin ? [y/N] " plugin_svn_init
+	if [ "$plugin_svn_init" != "y" ] && [ "$plugin_svn_init" != "Y" ]
+	then
+		rm -rf /tmp/${plugin_name}_tmp_svn
+		exit
+	fi
 fi
 
 # rsync git release to svn trunk

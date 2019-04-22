@@ -2,11 +2,11 @@
 [![Wordpress-Supported](https://img.shields.io/wordpress/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
 [![Wordpress-Version](https://img.shields.io/wordpress/plugin/v/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
 [![Wordpress-Downloads](https://img.shields.io/wordpress/plugin/dt/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
-[![Wordpress-Active-Installs](https://img.shields.io/wordpress/plugin/ai/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
+[![Wordpress-Active-Installs](https://img.shields.io/wordpress/plugin/installs/wpsol.svg)](https://wordpress.org/plugins/wpsol/)
 
 **Contributors:** koter84  
 **Requires at least:** 3.6  
-**Tested up to:** 4.6  
+**Tested up to:** 5.1  
 **Stable tag:** 1.1.11  
 **Tags:** scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget  
 **License:** GPLv2 or later  
@@ -35,22 +35,22 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ## Screenshots 
 
 ### 1. wp-login.php with scouting-login
-![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=20161108)
+![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=20190422)
 
 ### 2. sidebar-widget in theme twenty-fifteen
-![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=20161108)
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=20190422)
 
 ### 3. sidebar-widget in theme twenty-fourteen
-![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=20161108)
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=20190422)
 
 ### 4. sidebar-widget in theme twenty-thirteen
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=20161108)
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=20190422)
 
 ### 5. sidebar-widget in theme twenty-twelve
-![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=20161108)
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=20190422)
 
 ### 6. sidebar-widget in custom theme
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=20161108)
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=20190422)
 
 ## Installation 
 
@@ -166,4 +166,3 @@ Keep in mind that after this update you need to update your custom-theme.
 
 * Dutch
 * English
-
