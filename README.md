@@ -6,8 +6,8 @@
 
 **Contributors:** koter84  
 **Requires at least:** 3.6  
-**Tested up to:** 5.1  
-**Stable tag:** 1.1.11  
+**Tested up to:** 5.2.3  
+**Stable tag:** 1.1.12  
 **Tags:** scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
@@ -35,22 +35,22 @@ bugs and feature-requests can go to: [GitHub](https://github.com/koter84/wpSOL/i
 ## Screenshots 
 
 ### 1. wp-login.php with scouting-login
-![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=20190422)
+![wp-login.php with scouting-login](https://ps.w.org/wpsol/assets/screenshot-1.png?rev=20191002)
 
 ### 2. sidebar-widget in theme twenty-fifteen
-![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=20190422)
+![sidebar-widget in theme twenty-fifteen](https://ps.w.org/wpsol/assets/screenshot-2.png?rev=20191002)
 
 ### 3. sidebar-widget in theme twenty-fourteen
-![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=20190422)
+![sidebar-widget in theme twenty-fourteen](https://ps.w.org/wpsol/assets/screenshot-3.png?rev=20191002)
 
 ### 4. sidebar-widget in theme twenty-thirteen
-![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=20190422)
+![sidebar-widget in theme twenty-thirteen](https://ps.w.org/wpsol/assets/screenshot-4.png?rev=20191002)
 
 ### 5. sidebar-widget in theme twenty-twelve
-![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=20190422)
+![sidebar-widget in theme twenty-twelve](https://ps.w.org/wpsol/assets/screenshot-5.png?rev=20191002)
 
 ### 6. sidebar-widget in custom theme
-![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=20190422)
+![sidebar-widget in custom theme](https://ps.w.org/wpsol/assets/screenshot-6.png?rev=20191002)
 
 ## Installation 
 
@@ -76,6 +76,9 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup a redirect after login or logout and setup the Name the user gets in their profile and enforce that.
 
 ## Changelog 
+
+### 1.1.12 
+* checked for compatibility with wordpress 5.2.3
 
 ### 1.1.11 
 * old-style array() instead of []
