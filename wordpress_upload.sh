@@ -52,6 +52,24 @@ do
 	shift
 done
 
+# check for needed commands
+needed_commands=("sed" "curl" "rsync" "git" "svn" "zip" "php" "msgmerge" "msgcmp" "msgfmt")
+for needed_command in ${needed_commands[@]}
+do
+	which ${needed_command} >/dev/null 2>&1
+	needed_command_result=$?
+
+	if [ "${needed_command_result}" != "0" ]
+	then
+		echo "!> command ${needed_command} not found! please install..."
+		needed_commands_found="no"
+	fi
+done
+if [ "${needed_commands_found}" != "" ]
+then
+	exit
+fi
+
 # ToDo - load from .conf file
 plugin_name="wpsol"
 plugin_name_disp="wpSOL"
@@ -172,11 +190,16 @@ fi
 echo "> convert wordpress-readme to github-readme"
 if [ ! -f /tmp/wp2md ]
 then
-	curl -s -L https://github.com/wpreadme2markdown/wp2md/releases/latest | egrep -o '/wpreadme2markdown/wp2md/releases/download/[0-9.]*/wp2md.phar' | wget --base=http://github.com/ -i - -O /tmp/wp2md
+	curl -s https://api.github.com/repos/wpreadme2markdown/wp2md/releases/latest \
+	| grep "browser_download_url.*phar" \
+	| cut -d : -f 2,3 \
+	| tr -d \" \
+	| wget -q -i - -O /tmp/wp2md
+
 	chmod +x /tmp/wp2md
 fi
 /tmp/wp2md assets/readme.txt README.md
-index="## Index \n\n"
+index="## Index\n\n"
 grep '^## ' README.md | sed s/'## '// | sed s/' $'// | sed s/' '/-/g > /tmp/${plugin_name}_readme
 while read line
 do
@@ -184,12 +207,12 @@ do
 	index="$index* [$line](#$line_lower)\n"
 done < /tmp/${plugin_name}_readme
 
-sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/installs\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)\n"/ README.md
-sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
-sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
-sed -i s/"# ${plugin_name_disp} "/"# ${plugin_name_disp} \n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp}"/"# ${plugin_name_disp}\n[![Wordpress-Active-Installs](https:\/\/img.shields.io\/wordpress\/plugin\/installs\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)\n"/ README.md
+sed -i s/"# ${plugin_name_disp}"/"# ${plugin_name_disp}\n[![Wordpress-Downloads](https:\/\/img.shields.io\/wordpress\/plugin\/dt\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp}"/"# ${plugin_name_disp}\n[![Wordpress-Version](https:\/\/img.shields.io\/wordpress\/plugin\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
+sed -i s/"# ${plugin_name_disp}"/"# ${plugin_name_disp}\n[![Wordpress-Supported](https:\/\/img.shields.io\/wordpress\/v\/${plugin_name}.svg)](https:\/\/wordpress.org\/plugins\/${plugin_name}\/)"/ README.md
 
-sed -i s/'## Description '/"${index}\n## Description "/ README.md
+sed -i s/'## Description'/"${index}\n## Description"/ README.md
 imgcache=$(date +%Y%m%d)
 sed -i s/'.png'/".png?rev=$imgcache"/ README.md
 

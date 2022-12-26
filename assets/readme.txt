@@ -1,7 +1,7 @@
 === wpSOL ===
 Contributors: koter84
 Requires at least: 3.6
-Tested up to: 5.4.0
+Tested up to: 6.1.1
 Stable tag: 1.1.13
 Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
