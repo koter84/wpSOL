@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the wpSOL package.
 msgid ""
 msgstr ""
-"Project-Id-Version: wpSOL 1.1.13\n"
+"Project-Id-Version: wpSOL 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wpSOL\n"
-"POT-Creation-Date: 2016-08-16 00:00:00+00:00\n"
+"POT-Creation-Date: 2022-12-26 00:00:00+00:00\n"
 "PO-Revision-Date: 2014-01-07 16:14+0200\n"
 "Last-Translator: Dennis Koot <koter84@gmail.com>\n"
 "Language-Team: Dennis Koot <koter84@gmail.com>\n"
@@ -46,7 +46,7 @@ msgstr ""
 "deze website, neem contact op met de sitebeheerder als u denkt dat dit "
 "onjuist is"
 
-#: common.php:161 common.php:183 common.php:189 common.php:230
+#: common.php:161 common.php:183 common.php:189 common.php:245
 msgid "wpSOL Setup Instructions"
 msgstr "wpSOL Installatie Instructies"
 
@@ -66,7 +66,7 @@ msgstr ""
 "Fout 14: Er ging iets verkeerd, geef dit alstublieft door aan de "
 "sitebeheerder [%s|%s|%s|%s]"
 
-#: common.php:230
+#: common.php:245
 msgid ""
 "The login was cancelled, either the user cancelled the request, or login."
 "scouting.nl isn't aware of your domain (%s)"
@@ -74,59 +74,87 @@ msgstr ""
 "Het inloggen is geannuleerd, de gebruiker heeft geen toestemming gegeven, of "
 "je domein (%s) is niet bekend bij login.scouting.nl "
 
-#: common.php:235
+#: common.php:250
 msgid "The login failed with openid-mode: \"%s\""
 msgstr "Het inloggen is mislukt met openid-mode: \"%s\""
 
-#: common.php:235
+#: common.php:250
 msgid "wpSOL Support"
 msgstr "wpSOL Support"
 
-#: common.php:280
+#: common.php:299
 msgid "Settings"
 msgstr "Instellingen"
 
-#: common.php:289
+#: common.php:306
+msgid "wpSOL profile information"
+msgstr "wpSOL profiel informatie"
+
+#: common.php:313
+msgid "Birthdate"
+msgstr "Geboortedatum"
+
+#: common.php:324
+msgid "Gender"
+msgstr "Geslacht"
+
+#: common.php:335
+msgid "Scouting ID"
+msgstr "Scouting ID"
+
+#: common.php:350
 msgid "You do not have sufficient permissions to access this page."
 msgstr "Je hebt onvoldoende rechten voor het bekijken van deze pagina."
 
-#: common.php:295
+#: common.php:356
 msgid "Set display_name to: "
 msgstr "Stel display_name in op: "
 
-#: common.php:298
+#: common.php:359
 msgid "Full name"
 msgstr "Volledige naam"
 
-#: common.php:299
+#: common.php:360
 msgid "First name"
 msgstr "Voornaam"
 
-#: common.php:300
+#: common.php:361
 msgid "Last name"
 msgstr "Achternaam"
 
-#: common.php:301
+#: common.php:362
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: common.php:305
+#: common.php:366
 msgid "Force display_name on each login: "
 msgstr "Forceer display_name bij elke login: "
 
-#: common.php:309
+#: common.php:370
 msgid "Force first and last name on each login: "
 msgstr "Forceer voornaam en achternaam bij elke login: "
 
-#: common.php:313
+#: common.php:374
+msgid "Store birthdate to local profile: "
+msgstr "Sla geboortedatum op in het lokale profiel: "
+
+#: common.php:378
+msgid "Store gender to local profile: "
+msgstr "Sla geslacht op in het lokale profiel: "
+
+#: common.php:382
+msgid "Store Scouting ID to local profile: "
+msgstr "Sla Scouting lid-nummer op in het lokale profiel: "
+
+#: common.php:386
 msgid "Automatically create new users: "
 msgstr "Automatisch nieuwe gebruikers aanmaken: "
 
-#: common.php:317
+#: common.php:390
 msgid "Prefix for all Scouting Nederland users: "
 msgstr "Voorvoegsel voor alle Scouting Nederland users: "
 
-#: common.php:319
+#: common.php:392
 msgid ""
 "By giving a prefix like sn_ you can easily identify which accounts are from "
 "Scouting Nederland"
@@ -134,35 +162,35 @@ msgstr ""
 "Door een voorvoegsel in te stellen zoals sn_ kan je accounts van Scouting "
 "Nederland makkelijk terugvinden"
 
-#: common.php:322
+#: common.php:395
 msgid "After a successful login redirect user to: "
 msgstr "Na een succesvolle login redirect naar: "
 
-#: common.php:325 common.php:334
+#: common.php:398 common.php:407
 msgid "Default (no action)"
 msgstr "Standaard (geen actie)"
 
-#: common.php:326 common.php:335
+#: common.php:399 common.php:408
 msgid "Frontpage"
 msgstr "Frontpage"
 
-#: common.php:327
+#: common.php:400
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: common.php:331
+#: common.php:404
 msgid "After logout redirect user to: "
 msgstr "Na uitloggen redirect naar: "
 
-#: common.php:357
+#: common.php:430
 msgid "Settings Saved"
 msgstr "Instellingen Opgeslagen"
 
-#: common.php:364
+#: common.php:437
 msgid "wpSOL [ScoutsOnLine] Settings"
 msgstr "wpSOL [ScoutsOnLine] Instellingen"
 
-#: common.php:411
+#: common.php:484
 msgid "Save Changes"
 msgstr "Wijzigingen Opslaan"
 

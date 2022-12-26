@@ -219,6 +219,21 @@ function wpsol_authenticate_username_password()
 				update_user_meta( $user->ID, 'last_name', substr($gegevens['namePerson'], strpos($gegevens['namePerson'], " ")+1 ) );
 			}
 
+			if( get_option('wpsol_store_profile_birthdate') )
+			{
+				update_user_meta( $user->ID, 'wpsol_birthdate', $gegevens['birthDate'] );
+			}
+
+			if( get_option('wpsol_store_profile_gender') )
+			{
+				update_user_meta( $user->ID, 'wpsol_gender', $gegevens['person/gender'] );
+			}
+
+			if( get_option('wpsol_store_profile_scouting_id') )
+			{
+				update_user_meta( $user->ID, 'wpsol_scouting_id', $gegevens['contact/postalCode/home'] );
+			}
+
 			// add login filter to redirect
 			add_filter( 'login_redirect', 'wpsol_login_redirect' );
 
@@ -244,6 +259,9 @@ function wpsol_install()
 	update_option('wpsol_display_name', 'fullname');
 	update_option('wpsol_force_display_name', false);
 	update_option('wpsol_force_first_last_name', false);
+	update_option('wpsol_store_profile_birthdate', false);
+	update_option('wpsol_store_profile_gender', false);
+	update_option('wpsol_store_profile_scouting_id', false);
 	update_option('wpsol_username_prefix', 'sn_');
 	update_option('wpsol_autocreate', true);
 	update_option('wpsol_login_redirect', 'default');
@@ -276,9 +294,52 @@ function wpsol_logout_redirect()
 }
 
 // Geef extra links op de plugin-overzichtspagina
-function wpsol_plugin_action_links( $links ) {
+function wpsol_plugin_action_links( $links )
+{
 	array_unshift($links, '<a href="'.esc_url(get_admin_url(null, 'options-general.php?page=wpsol_settings')).'">'.__('Settings', 'wpsol').'</a>');
 	return $links;
+}
+
+// Show extra fields (birthdate/gender/scouting_id) on profile page
+function extra_user_profile_fields( $user )
+{
+	echo "<h3>".__('wpSOL profile information', 'wpsol')."</h3>";
+    echo "<table class='form-table'>";
+
+	if( get_option('wpsol_store_profile_birthdate') )
+	{
+		echo "
+		<tr>
+			<th><label for='birthdate'>".__('Birthdate', 'wpsol')."</label></th>
+			<td>
+				<input disabled type='text' name='birthdate' id='birthdate' value='".esc_attr( get_the_author_meta( 'wpsol_birthdate', $user->ID ) )."' class='regular-text' /><br />
+			</td>
+		</tr>";
+	}
+
+	if( get_option('wpsol_store_profile_gender') )
+	{
+		echo "
+		<tr>
+			<th><label for='gender'>".__('Gender', 'wpsol')."</label></th>
+			<td>
+				<input disabled type='text' name='gender' id='gender' value='".esc_attr( get_the_author_meta( 'wpsol_gender', $user->ID ) )."' class='regular-text' /><br />
+			</td>
+		</tr>";
+	}
+
+	if( get_option('wpsol_store_profile_scouting_id') )
+	{
+		echo "
+		<tr>
+			<th><label for='gender'>".__('Scouting ID', 'wpsol')."</label></th>
+			<td>
+				<input disabled type='text' name='scouting_id' id='scouting_id' value='".esc_attr( get_the_author_meta( 'wpsol_scouting_id', $user->ID ) )."' class='regular-text' /><br />
+			</td>
+		</tr>";
+	}
+
+	echo "</table>";
 }
 
 // Admin Settings Pagina
@@ -307,6 +368,18 @@ function wpsol_admin_options()
 		),
 		'wpsol_force_first_last_name' => array(
 			'name' => __('Force first and last name on each login: ', 'wpsol'),
+			'type' => 'checkbox',
+		),
+		'wpsol_store_profile_birthdate' => array(
+			'name' => __('Store birthdate to local profile: ', 'wpsol'),
+			'type' => 'checkbox',
+		),
+		'wpsol_store_profile_gender' => array(
+			'name' => __('Store gender to local profile: ', 'wpsol'),
+			'type' => 'checkbox',
+		),
+		'wpsol_store_profile_scouting_id' => array(
+			'name' => __('Store Scouting ID to local profile: ', 'wpsol'),
 			'type' => 'checkbox',
 		),
 		'wpsol_autocreate' => array(

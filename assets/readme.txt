@@ -2,7 +2,7 @@
 Contributors: koter84
 Requires at least: 3.6
 Tested up to: 6.1.1
-Stable tag: 1.1.13
+Stable tag: 1.2.0
 Tags: scouting, scouting nederland, sol, scoutsonline, openid, login, sidebar-widget
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -50,6 +50,10 @@ To setup the system at Scouting Nederland you need the webmaster-privilege for y
 Yes, there is a settings-page where you can setup a redirect after login or logout and setup the Name the user gets in their profile and enforce that.
 
 == Changelog ==
+
+= 1.2.0 =
+* added optional profile fields birthdate, gender and scouting_id which get synced from scouting.nl on every login (when enabled in plugin settings)
+* checked for compatibility with wordpress 6.1.1
 
 = 1.1.13 =
 * checked for compatibility with wordpress 5.4.0
