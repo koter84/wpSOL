@@ -41,7 +41,22 @@ function wpsol_wp_login_form($args = array()) // login_form action
 	<p style="margin-bottom: 8px;">
 		<label style="display: block; margin-bottom: 5px;">'.__('Login with your SOL account', 'wpsol').'<br />
 		<input type="text" name="openid_identifier" id="openid_identifier" class="input openid_identifier" value="" size="20" /></label>
-	</p>';
+	</p>
+	<script type="text/javascript">
+		document.getElementById("openid_identifier").addEventListener("change", (e)=>{
+				const user = document.getElementById("user_login");
+				const pass = document.getElementById("user_pass");
+
+				if(e.target.value) {
+						user.required = false;
+						pass.required = false;
+				}
+				else {
+						user.required = true;
+						pass.required = true;
+				}
+		});
+	</script>';
 
 	if( $args['echo'] )
 		echo $echo;
